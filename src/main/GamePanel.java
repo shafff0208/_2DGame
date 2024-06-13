@@ -1,7 +1,8 @@
 package main;
 
+import entity.Entity;
 import entity.Player;
-import tiles.Tile;
+import objects.SuperObject;
 import tiles.TileManager;
 
 import javax.swing.*;
@@ -33,7 +34,12 @@ public class GamePanel extends JPanel implements Runnable {
     Thread gameThread;
     KeyHandler keyH = new KeyHandler();
     public CollisionDetection cDetection = new CollisionDetection(this);
+//    public AssetSetter aSetter = new AssetSetter(this);
     public Player player = new Player(this,keyH);
+    public UI ui = new UI(this);
+    public Entity rat[] = new Entity[10];
+    public SuperObject obj[] = new SuperObject[10];
+
 
 
     public GamePanel() {
@@ -94,8 +100,16 @@ public class GamePanel extends JPanel implements Runnable {
         //main character design
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
+
+        //Draw Tiles
         tileM.draw(g2);
+
+        //Draw Player
         player.draw(g2);
+
+        //Draw UI
+        ui.draw(g2);
+
         g2.dispose();
 
 

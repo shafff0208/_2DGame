@@ -1,6 +1,7 @@
 package tiles;
 
 import main.GamePanel;
+import main.UtilityTool;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -26,6 +27,8 @@ public class TileManager {
         loadMap("/maps/BiggerMap.txt");
 
     }
+
+
 
     //Read map txt file
     public void loadMap(String filePath){
@@ -68,30 +71,31 @@ public class TileManager {
 
     }
 
-    public void getTileImage(){
+    public void setup(int index, String imageName, boolean collision){
+
+        UtilityTool uTool = new UtilityTool();
 
         try{
-
-            tile[0] = new Tile();
-            tile[0].image = ImageIO.read(getClass().getResourceAsStream("/tiles/Grass.png"));
-
-            tile[1] = new Tile();
-            tile[1].image = ImageIO.read(getClass().getResourceAsStream("/tiles/Water.png"));
-            tile[1].collision = true;
-
-            tile[2] = new Tile();
-            tile[2].image = ImageIO.read(getClass().getResourceAsStream("/tiles/Dirt.png"));
-
-            tile[3] = new Tile();
-            tile[3].image = ImageIO.read(getClass().getResourceAsStream("/tiles/Wall.png"));
-            tile[3].collision = true;
-
+            tile[index] = new Tile();
+            tile[index].image = ImageIO.read(getClass().getResourceAsStream("/tiles/" + imageName + ".png"));
+            tile[index].image = uTool.scaleImage(tile[index].image, gp.tileSize, gp.tileSize);
+            tile[index].collision = collision;
 
         }catch(IOException e){
             e.printStackTrace();
         }
 
     }
+
+    public void getTileImage(){
+
+            setup(0, "Grass", false);
+            setup(1, "Water", true);
+            setup(2, "Dirt", false);
+            setup(3, "Wall", true);
+
+    }
+
 
     public void draw(Graphics2D g2){
 
@@ -113,7 +117,7 @@ public class TileManager {
                 worldY + gp.tileSize > gp.player.worldY - gp.player.screenY &&
                 worldY - gp.tileSize < gp.player.worldY + gp.player.screenY){
 
-                g2.drawImage(tile[tileNum].image, screenX, screenY, gp.tileSize, gp.tileSize, null);
+                g2.drawImage(tile[tileNum].image, screenX, screenY,null);
 
             }
 

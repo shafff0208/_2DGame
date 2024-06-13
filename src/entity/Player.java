@@ -2,11 +2,9 @@ package entity;
 
 import main.GamePanel;
 import main.KeyHandler;
-
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
+
 
 public class Player extends Entity{
 
@@ -17,6 +15,7 @@ public class Player extends Entity{
 
     public Player (GamePanel gp, KeyHandler keyH){
 
+        super(gp);
         this.gp = gp;
         this.keyH = keyH;
 
@@ -31,33 +30,32 @@ public class Player extends Entity{
         solidArea.y = 16;
         solidArea.height = 32;
         solidArea.width = 32;
-
-
     }
 
     public void setDefaultValues(){
 
+        //Player position
         worldX= gp.tileSize * 16;
         worldY= gp.tileSize * 8;
+
+        //Player Status
         speed = 4;
         direction = "right";
+        maxLife = 5;
+        life = maxLife;
     }
 
     public void getPlayerImage(){
-        try{
 
-            up1 = ImageIO.read(getClass().getResourceAsStream("/player/Player_Up1.png"));
-            up2 = ImageIO.read(getClass().getResourceAsStream("/player/Player_Up2.png"));
-            left1 = ImageIO.read(getClass().getResourceAsStream("/player/Player_Left1.png"));
-            left2 = ImageIO.read(getClass().getResourceAsStream("/player/Player_Left2.png"));
-            right1 = ImageIO.read(getClass().getResourceAsStream("/player/Player_Right1.png"));
-            right2 = ImageIO.read(getClass().getResourceAsStream("/player/Player_Right2.png"));
-            down1 = ImageIO.read(getClass().getResourceAsStream("/player/Player_Down1.png"));
-            down2 = ImageIO.read(getClass().getResourceAsStream("/player/Player_Down2.png"));
+        up1 = setup("/player/Player_Up1");
+        up2 = setup("/player/Player_Up2");
+        down1 = setup("/player/Player_Down1");
+        down2 = setup("/player/Player_Down2");
+        left1 = setup("/player/Player_Left1");
+        left2 = setup("/player/Player_Left2");
+        right1 = setup("/player/Player_Right1");
+        right2 = setup("/player/Player_Right2");
 
-        }catch(IOException e){
-            e.printStackTrace();
-        }
     }
 
     public void update(){
@@ -111,8 +109,6 @@ public class Player extends Entity{
     }
     public void draw(Graphics2D g2){
 
-//        g2.setColor(Color.white);
-//        g2.fillRect(x, y, gp.tileSize, gp.tileSize);
         BufferedImage image = null;
         switch (direction){
             case "up":
@@ -148,7 +144,7 @@ public class Player extends Entity{
                 }
                 break;
         }
-        g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
+        g2.drawImage(image, screenX, screenY, null);
 
     }
 

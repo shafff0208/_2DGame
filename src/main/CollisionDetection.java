@@ -62,4 +62,11 @@ public class CollisionDetection {
                 break;
         }
     }
+
+    public void checkEntity (Entity entity, Entity[]target){
+
+
+    }
+
+
 }
