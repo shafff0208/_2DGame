@@ -19,6 +19,7 @@ public class Entity {
     public int spriteCounter = 0;
     public int spriteNum = 1;
     public Rectangle solidArea = new Rectangle(0,0,48,48);
+    public int solidAreaDefaultX, solidAreaDefaultY;
     public Boolean collisionOn = false;
     public int maxLife;
     public int life;
@@ -63,7 +64,7 @@ public class Entity {
         }
 
     }
-    public void draw(){
+    public void draw(Graphics2D g2){
 
     }
 

@@ -1,7 +1,7 @@
 package main;
 
-import objects.OBJ_Life;
-import objects.SuperObject;
+import object.OBJ_Life;
+import object.SuperObject;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.awt.Color;
@@ -13,7 +13,7 @@ public class UI {
     GamePanel gp;
     Graphics2D g2;
     Font courier_35;
-    BufferedImage Life_5, Life_4, Life_3, Life_2, Life_1, Life_0, Heart;
+    BufferedImage Heart;
 
 
     public UI(GamePanel gp) {
@@ -24,72 +24,53 @@ public class UI {
         //Life HUD
         SuperObject life;
         life = new OBJ_Life(gp);
-        Life_5 = life.image;
-        Life_4 = life.image2;
-        Life_3 = life.image3;
-        Life_2 = life.image4;
-        Life_1 = life.image5;
-        Life_0 = life.image6;
-        Heart = life.image7;
+        Heart = life.image;
     }
 
     public void draw(Graphics2D g2) {
 
         this.g2 = g2;
-        drawPlayerLife();
+        g2.setFont(courier_35);
+        g2.setColor(Color.white);
+
+        if(gp.gameState == gp.playState){
+            //Do play stuff
+            drawPlayerLife();
+        }
+        if(gp.gameState == gp.pauseState){
+
+            //Do pause stuff
+            drawPauseScreen();
+        }
+
     }
 
     public void drawPlayerLife() {
 
-
-        g2.setFont(courier_35);
-        g2.setColor(Color.white);
         g2.drawString("x " + gp.player.life, 74, 68);
         g2.drawImage(Heart, gp.tileSize/2, gp.tileSize/2, gp.tileSize, gp.tileSize, null);
 
     }
+
+    public void drawPauseScreen(){
+
+        String text = "PAUSED";
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN,80F));
+        int x = getXCenteredText(text);
+
+        int y = gp.screenHeight/2;
+        g2.drawString(text, x, y);
+
+    }
+
+    public int getXCenteredText(String text){
+
+        int length = (int)g2.getFontMetrics().getStringBounds(text,g2).getWidth();
+        int x = gp.screenWidth/2 - length/2;
+        return x;
+    }
 }
 
-//package main;
-//
-//import objects.OBJ_Life;
-//import objects.SuperObject;
-//
-//import java.awt.*;
-//import java.awt.image.BufferedImage;
-//
-//public class UI {
-//
-//    GamePanel gp;
-//    Graphics2D g2;
-//    BufferedImage[] lifeImages;
-//
-//    public UI(GamePanel gp) {
-//        this.gp = gp;
-//
-//        // Life HUD
-//        OBJ_Life life = new OBJ_Life(gp);
-//        lifeImages = new BufferedImage[6];
-//        for (int i = 0; i < 6; i++) {
-//            lifeImages[i] = life.getLifeImage(i);
-//        }
-//    }
-//
-//    public void draw(Graphics2D g2) {
-//        this.g2 = g2;
-//        int x = gp.tileSize / 2;
-//        int y = gp.tileSize / 2;
-//        g2.drawImage(lifeImages[0], x, y, null);
-//    }
-//
-////    public void drawPlayerLife() {
-////
-////        int x = gp.tileSize / 2;
-////        int y = gp.tileSize / 2;
-////        int i = 0;
-////        g2.drawImage(Life_0, x, y, null);
-////
-////    }
-//}
+
 
 

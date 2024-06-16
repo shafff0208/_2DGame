@@ -12,6 +12,8 @@ public class Player extends Entity{
     KeyHandler keyH;
     public final int screenX;
     public final int screenY;
+    int hasGun = 0;
+    int hasSword = 0;
 
     public Player (GamePanel gp, KeyHandler keyH){
 
@@ -28,6 +30,8 @@ public class Player extends Entity{
         solidArea = new Rectangle();
         solidArea.x = 8;
         solidArea.y = 16;
+        solidAreaDefaultX = solidArea.x;
+        solidAreaDefaultY = solidArea.y;
         solidArea.height = 32;
         solidArea.width = 32;
     }
@@ -77,9 +81,13 @@ public class Player extends Entity{
 
             }
 
-            //Check Collision
+            //Check Tile Collision
             collisionOn = false;
             gp.cDetection.checkTile(this);
+
+            //Check Obj Collision
+            int objIndex = gp.cDetection.checkObject(this, true);
+            pickUpObj(objIndex);
 
             if(collisionOn == false){
                 switch (direction){
@@ -107,6 +115,33 @@ public class Player extends Entity{
         }
 
     }
+
+    public void pickUpObj(int i){
+        if(i != 999){
+            String objectName = gp.obj[i].name;
+            switch (objectName){
+                case "Normal Gun":
+                    hasGun++;
+                    gp.obj[i] = null;
+                    System.out.println("Gun: " + objectName);
+                    break;
+
+                case "XCALIBA" :
+                    hasSword++;
+                    gp.obj[i] = null;
+                    System.out.println("Sword: " + objectName);
+                    break;
+
+                case "Life":
+                    life++;
+                    gp.obj[i] = null;
+                    System.out.println("+1 Health");
+                    break;
+
+            }
+        }
+    }
+
     public void draw(Graphics2D g2){
 
         BufferedImage image = null;
