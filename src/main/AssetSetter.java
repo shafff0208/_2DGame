@@ -1,6 +1,6 @@
 package main;
 
-import entity.Entity;
+//import entity.Entity;
 //import entity.MON_Rat;
 import object.OBJ_Gun_Blue;
 import object.OBJ_Life;

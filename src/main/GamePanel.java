@@ -108,7 +108,7 @@ public class GamePanel extends JPanel implements Runnable {
             player.update();
         }
         if(gameState == pauseState){
-            //nothing
+            //do nothing
         }
 
     }
@@ -128,7 +128,7 @@ public class GamePanel extends JPanel implements Runnable {
             }
         }
 
-        //Draw Monster
+//        //Draw Monster
 //        for(int i = 0; i < rat.length; i++){
 //            if (rat[i] != null){
 //                rat[i].draw(g2);
