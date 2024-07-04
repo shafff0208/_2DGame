@@ -39,8 +39,8 @@ public class Player extends Entity{
     public void setDefaultValues(){
 
         //Player position
-        worldX= gp.tileSize * 16;
-        worldY= gp.tileSize * 8;
+        worldX= gp.tileSize * 26;
+        worldY= gp.tileSize * 27;
 
         //Player Status
         speed = 4;
@@ -89,6 +89,11 @@ public class Player extends Entity{
             int objIndex = gp.cDetection.checkObject(this, true);
             pickUpObj(objIndex);
 
+            //Check Entity Collision
+            int monIndex = gp.cDetection.checkEntity(this, gp.monster);
+            interactMON(monIndex);
+
+
             if(collisionOn == false){
                 switch (direction){
                     case "up": worldY -= speed;
@@ -123,22 +128,30 @@ public class Player extends Entity{
                 case "Normal Gun":
                     hasGun++;
                     gp.obj[i] = null;
-                    System.out.println("Gun: " + objectName);
+                    gp.ui.showMessage("+1 Normal Gun");
+
                     break;
 
                 case "XCALIBA" :
                     hasSword++;
                     gp.obj[i] = null;
-                    System.out.println("Sword: " + objectName);
+                    gp.ui.showMessage("+1 XCALIBA");
                     break;
 
                 case "Life":
                     life++;
                     gp.obj[i] = null;
-                    System.out.println("+1 Health");
+                    gp.ui.showMessage("+1 life");
+
                     break;
 
             }
+        }
+    }
+
+    public void interactMON(int i){
+        if(i != 999){
+            System.out.println("Collision!");
         }
     }
 
@@ -181,6 +194,10 @@ public class Player extends Entity{
         }
         g2.drawImage(image, screenX, screenY, null);
 
+    }
+
+    public Rectangle getBounds() {
+        return new Rectangle(gp.player.worldX, gp.player.worldY, gp.tileSize, gp.tileSize);
     }
 
 }

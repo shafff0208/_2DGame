@@ -20,12 +20,11 @@ public class GamePanel extends JPanel implements Runnable {
     public final int screenHeight = tileSize * maxScreenRow;
 
     //World Settings
-    public final int maxWorldCol = 42;
-    public final int maxWorldRow = 32;
+    public final int maxWorldCol = 50;
+    public final int maxWorldRow = 50;
 
     // FPS
     int FPS = 60;
-
     //System
     TileManager tileM = new TileManager(this);
     Thread gameThread;
@@ -33,17 +32,17 @@ public class GamePanel extends JPanel implements Runnable {
     public CollisionDetection cDetection = new CollisionDetection(this);
     public AssetSetter aSetter = new AssetSetter(this);
     public UI ui = new UI(this);
-
-
     //Entity, Object
     public Player player = new Player(this,keyH);
-    public Entity[] rat = new Entity[10];
-    public SuperObject[] obj = new SuperObject[10];
+    public Entity[] monster = new Entity[20];
+
+    public SuperObject[] obj = new SuperObject[50];
 
     //Game State
     public int gameState;
     public final int playState = 1;
     public final int pauseState = 2;
+//    public final int dialogueState = 3;
 
     public GamePanel() {
 
@@ -57,7 +56,7 @@ public class GamePanel extends JPanel implements Runnable {
     public void setupGame(){
 
         aSetter.setObject();
-//        aSetter.setMON();
+        aSetter.setMON();
         gameState = playState;
 
     }
@@ -106,6 +105,11 @@ public class GamePanel extends JPanel implements Runnable {
 
         if(gameState == playState){
             player.update();
+            for(int i = 0; i < monster.length; i++){
+                if(monster[i] != null){
+                    monster[i].update();
+                }
+            }
         }
         if(gameState == pauseState){
             //do nothing
@@ -128,12 +132,11 @@ public class GamePanel extends JPanel implements Runnable {
             }
         }
 
-//        //Draw Monster
-//        for(int i = 0; i < rat.length; i++){
-//            if (rat[i] != null){
-//                rat[i].draw(g2);
-//            }
-//        }
+        for(int i = 0; i < monster.length; i++){
+            if (monster[i] != null){
+                monster[i].draw(g2);
+            }
+        }
 
         //Draw Player
         player.draw(g2);
