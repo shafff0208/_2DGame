@@ -26,6 +26,7 @@ public class KeyHandler implements KeyListener {
         //Title State
         if(gp.gameState == gp.titleState){
 
+            //Decrease commandNum by 1 for selection
             if(code == KeyEvent.VK_W){
                 gp.ui.commandNum--;
                 if(gp.ui.commandNum < 0){
@@ -33,6 +34,7 @@ public class KeyHandler implements KeyListener {
                 }
             }
 
+            //Increase commandNum by 1 for selection
             if(code == KeyEvent.VK_S){
                 gp.ui.commandNum++;
                 if(gp.ui.commandNum > 2){
@@ -79,8 +81,6 @@ public class KeyHandler implements KeyListener {
             if(code == KeyEvent.VK_E){
                 gp.gameState = gp.pauseState;
 
-                //Debug
-                //System.out.println("E Key Pressed!");
             }
         }
 
@@ -90,8 +90,6 @@ public class KeyHandler implements KeyListener {
             if(code == KeyEvent.VK_E){
                 gp.gameState = gp.playState;
 
-                //Debug
-                //System.out.println("E Key Pressed!");
             }
 
         }

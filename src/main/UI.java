@@ -111,7 +111,7 @@ public class UI {
         g2.setColor(Color.white);
         g2.drawString(text, x, y);
 
-        //Menu
+        //Menu Selection
         g2.setFont(g2.getFont().deriveFont(Font.BOLD,48F));
 
         text = "New Game";
