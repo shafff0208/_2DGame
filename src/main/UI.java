@@ -19,6 +19,7 @@ public class UI {
     public boolean messageOn = false;
     public String message = "";
     public int messageCounter = 0;
+    public int commandNum = 0;
 
 
     public UI(GamePanel gp) {
@@ -52,6 +53,12 @@ public class UI {
         g2.setFont(customFont);
         g2.setColor(Color.white);
 
+        //Title State
+        if(gp.gameState == gp.titleState){
+            drawTitleScreen();
+        }
+
+        //Play State
         if(gp.gameState == gp.playState){
             //Do play stuff
             drawPlayerLife();
@@ -67,6 +74,7 @@ public class UI {
             }
         }
 
+        //Pause State
         if(gp.gameState == gp.pauseState){
             //Do pause stuff
             drawPauseScreen();
@@ -79,6 +87,55 @@ public class UI {
         g2.setFont(g2.getFont().deriveFont(50F));
         g2.drawImage(Heart, gp.tileSize/2, gp.tileSize/2, gp.tileSize, gp.tileSize, null);
         g2.drawString("x" + gp.player.life, 74, 68);
+
+    }
+
+    public void drawTitleScreen(){
+
+        //Title Screen color
+        g2.setColor(new Color(146,198,210));
+        g2.fillRect(0,0, gp.screenWidth, gp.screenHeight);
+
+        //Title Name
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD,96F));
+        String text = "Purifier's Quest";
+        int x = getXCenteredText(text);
+        int y = gp.tileSize * 3;
+
+        //Text Shadow
+        g2.setColor(Color.black);
+        g2.drawString(text, x+5, y+5);
+
+        //Text Primary Color
+        g2.setColor(Color.white);
+        g2.drawString(text, x, y);
+
+        //Menu
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD,48F));
+
+        text = "New Game";
+        x = getXCenteredText(text);
+        y += gp.tileSize * 4;
+        g2.drawString(text, x, y );
+        if (commandNum == 0){
+            g2.drawString(">", x-gp.tileSize, y);
+        }
+
+        text = "Load Game";
+        x = getXCenteredText(text);
+        y += gp.tileSize;
+        g2.drawString(text, x, y );
+        if (commandNum == 1){
+            g2.drawString(">", x-gp.tileSize, y);
+        }
+
+        text = "Quit";
+        x = getXCenteredText(text);
+        y += gp.tileSize;
+        g2.drawString(text, x, y );
+        if (commandNum == 2){
+            g2.drawString(">", x-gp.tileSize, y);
+        }
 
     }
 

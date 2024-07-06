@@ -22,31 +22,48 @@ public class KeyHandler implements KeyListener {
     public void keyPressed(KeyEvent e) {
 
         int code = e.getKeyCode();
-        if(code == KeyEvent.VK_W){
-            upPressed= true;
-        }
-        if(code == KeyEvent.VK_A){
-            leftPressed= true;
-        }
-        if(code == KeyEvent.VK_S){
-            downPressed= true;
-        }
-        if(code == KeyEvent.VK_D){
-            rightPressed= true;
-        }
-        if (code == KeyEvent.VK_SPACE){
-            shootKeyPressed = true;
-        }
-        if(code == KeyEvent.VK_E){
 
-            if(gp.gameState == gp.playState){
-                gp.gameState = gp.pauseState;
+        //Title State
+        if(gp.gameState == gp.titleState){
+
+            if(code == KeyEvent.VK_W){
+                gp.ui.commandNum--;
             }
-            else if(gp.gameState == gp.pauseState){
-                gp.gameState = gp.playState;
+            if(code == KeyEvent.VK_A){
+                gp.ui.commandNum++;
             }
+
         }
 
+
+        //Play State
+        if(gp.gameState == gp.playState){
+
+            if(code == KeyEvent.VK_W){
+                upPressed= true;
+            }
+            if(code == KeyEvent.VK_A){
+                leftPressed= true;
+            }
+            if(code == KeyEvent.VK_S){
+                downPressed= true;
+            }
+            if(code == KeyEvent.VK_D){
+                rightPressed= true;
+            }
+            if (code == KeyEvent.VK_SPACE){
+                shootKeyPressed = true;
+            }
+            if(code == KeyEvent.VK_E){
+
+                if(gp.gameState == gp.playState){
+                    gp.gameState = gp.pauseState;
+                }
+                else if(gp.gameState == gp.pauseState){
+                    gp.gameState = gp.playState;
+                }
+            }
+        }
     }
 
     @Override
