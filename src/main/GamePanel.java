@@ -40,9 +40,10 @@ public class GamePanel extends JPanel implements Runnable {
 
     //Game State
     public int gameState;
+    public final int titleState = 0;
     public final int playState = 1;
     public final int pauseState = 2;
-//    public final int dialogueState = 3;
+
 
     public GamePanel() {
 
@@ -57,7 +58,7 @@ public class GamePanel extends JPanel implements Runnable {
 
         aSetter.setObject();
         aSetter.setMON();
-        gameState = playState;
+        gameState = titleState;
 
     }
 
@@ -122,30 +123,36 @@ public class GamePanel extends JPanel implements Runnable {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
 
-        //Draw Tiles
-        tileM.draw(g2);
+        //Title Screen
+        if (gameState == titleState){
+            ui.draw(g2);
+        }else {
 
-        //Draw Object
-        for(int i = 0; i < obj.length; i++){
-            if (obj[i] != null){
-                obj[i].draw(g2, this);
+                //Draw Tiles
+                tileM.draw(g2);
+
+                //Draw Object
+                for(int i = 0; i < obj.length; i++){
+                    if (obj[i] != null){
+                        obj[i].draw(g2, this);
+                    }
+                }
+
+                //Draw Monsters
+                for(int i = 0; i < monster.length; i++){
+                    if (monster[i] != null){
+                        monster[i].draw(g2);
+                    }
+                }
+
+                //Draw Player
+                player.draw(g2);
+
+                //Draw UI
+                ui.draw(g2);
             }
-        }
-
-        for(int i = 0; i < monster.length; i++){
-            if (monster[i] != null){
-                monster[i].draw(g2);
-            }
-        }
-
-        //Draw Player
-        player.draw(g2);
-
-        //Draw UI
-        ui.draw(g2);
 
         g2.dispose();
-
 
     }
 }
