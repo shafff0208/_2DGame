@@ -59,7 +59,7 @@ public class KeyHandler implements KeyListener {
         }
 
         //Play State
-        if(gp.gameState == gp.playState){
+        else if(gp.gameState == gp.playState){
 
             if(code == KeyEvent.VK_W){
                 upPressed= true;
@@ -73,20 +73,25 @@ public class KeyHandler implements KeyListener {
             if(code == KeyEvent.VK_D){
                 rightPressed= true;
             }
-            if (code == KeyEvent.VK_SPACE){
+            if(code == KeyEvent.VK_SPACE){
                 shootKeyPressed = true;
             }
-            if(code == KeyEvent.VK_E) {
+            if(code == KeyEvent.VK_E){
                 gp.gameState = gp.pauseState;
 
+                //Debug
+                //System.out.println("E Key Pressed!");
             }
         }
 
         //Pause State
-        if(gp.gameState == gp.pauseState){
+        else if(gp.gameState == gp.pauseState){
 
             if(code == KeyEvent.VK_E){
                 gp.gameState = gp.playState;
+
+                //Debug
+                //System.out.println("E Key Pressed!");
             }
 
         }

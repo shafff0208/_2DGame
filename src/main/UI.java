@@ -34,11 +34,6 @@ public class UI {
             e.printStackTrace();
         }
 
-        //Life HUD
-        SuperObject life;
-        life = new OBJ_Life(gp);
-        Heart = life.image;
-
     }
     public void showMessage(String text){
 
@@ -55,6 +50,7 @@ public class UI {
 
         //Title State
         if(gp.gameState == gp.titleState){
+            //Do title stuff
             drawTitleScreen();
         }
 
@@ -84,6 +80,11 @@ public class UI {
 
     public void drawPlayerLife() {
 
+        //Life HUD
+        SuperObject life;
+        life = new OBJ_Life(gp);
+        Heart = life.image;
+
         g2.setFont(g2.getFont().deriveFont(50F));
         g2.drawImage(Heart, gp.tileSize/2, gp.tileSize/2, gp.tileSize, gp.tileSize, null);
         g2.drawString("x" + gp.player.life, 74, 68);
@@ -93,7 +94,7 @@ public class UI {
     public void drawTitleScreen(){
 
         //Title Screen color
-        g2.setColor(new Color(146,198,210));
+        g2.setColor(new Color(181, 210, 156));
         g2.fillRect(0,0, gp.screenWidth, gp.screenHeight);
 
         //Title Name

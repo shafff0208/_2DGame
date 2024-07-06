@@ -59,7 +59,6 @@ public class GamePanel extends JPanel implements Runnable {
         aSetter.setObject();
         aSetter.setMON();
         gameState = titleState;
-//        gameState = playState;
 
     }
 
@@ -126,34 +125,33 @@ public class GamePanel extends JPanel implements Runnable {
 
         //Title Screen
         if (gameState == titleState){
-
             ui.draw(g2);
+        }else {
 
-        }else{
+                //Draw Tiles
+                tileM.draw(g2);
 
-            //Draw Tiles
-            tileM.draw(g2);
-
-            //Draw Object
-            for(int i = 0; i < obj.length; i++){
-                if (obj[i] != null){
-                    obj[i].draw(g2, this);
+                //Draw Object
+                for(int i = 0; i < obj.length; i++){
+                    if (obj[i] != null){
+                        obj[i].draw(g2, this);
+                    }
                 }
+
+                //Draw Monsters
+                for(int i = 0; i < monster.length; i++){
+                    if (monster[i] != null){
+                        monster[i].draw(g2);
+                    }
+                }
+
+                //Draw Player
+                player.draw(g2);
+
+                //Draw UI
+                ui.draw(g2);
             }
 
-            for(int i = 0; i < monster.length; i++){
-                if (monster[i] != null){
-                    monster[i].draw(g2);
-                }
-            }
-
-            //Draw Player
-            player.draw(g2);
-
-            //Draw UI
-            ui.draw(g2);
-
-        }
         g2.dispose();
 
     }

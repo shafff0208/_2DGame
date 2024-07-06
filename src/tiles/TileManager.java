@@ -67,6 +67,8 @@ public class TileManager {
 
         }catch(Exception e){
 
+            e.printStackTrace();
+
         }
 
     }
