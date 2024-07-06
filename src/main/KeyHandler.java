@@ -28,13 +28,35 @@ public class KeyHandler implements KeyListener {
 
             if(code == KeyEvent.VK_W){
                 gp.ui.commandNum--;
+                if(gp.ui.commandNum < 0){
+                    gp.ui.commandNum = 2;
+                }
             }
-            if(code == KeyEvent.VK_A){
+
+            if(code == KeyEvent.VK_S){
                 gp.ui.commandNum++;
+                if(gp.ui.commandNum > 2){
+                    gp.ui.commandNum = 0;
+                }
+            }
+
+            if(code == KeyEvent.VK_SPACE){
+                if (gp.ui.commandNum == 0){
+
+                    gp.gameState = gp.playState;
+
+                }if(gp.ui.commandNum == 1){
+
+                    //Save & Load Function
+
+                }if(gp.ui.commandNum == 2){
+
+                    System.exit(0);
+
+                }
             }
 
         }
-
 
         //Play State
         if(gp.gameState == gp.playState){
@@ -54,17 +76,23 @@ public class KeyHandler implements KeyListener {
             if (code == KeyEvent.VK_SPACE){
                 shootKeyPressed = true;
             }
-            if(code == KeyEvent.VK_E){
+            if(code == KeyEvent.VK_E) {
+                gp.gameState = gp.pauseState;
 
-                if(gp.gameState == gp.playState){
-                    gp.gameState = gp.pauseState;
-                }
-                else if(gp.gameState == gp.pauseState){
-                    gp.gameState = gp.playState;
-                }
             }
         }
+
+        //Pause State
+        if(gp.gameState == gp.pauseState){
+
+            if(code == KeyEvent.VK_E){
+                gp.gameState = gp.playState;
+            }
+
+        }
     }
+
+
 
     @Override
     public void keyReleased(KeyEvent e) {
@@ -82,10 +110,9 @@ public class KeyHandler implements KeyListener {
         if(code == KeyEvent.VK_D){
             rightPressed= false;
         }
-        if (code == KeyEvent.VK_SPACE){
+        if(code == KeyEvent.VK_SPACE){
             shootKeyPressed = false;
         }
-
 
     }
 }
