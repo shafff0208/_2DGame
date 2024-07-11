@@ -14,16 +14,22 @@ public class Entity {
     public int worldX, worldY;
     public int speed;
     public BufferedImage up1, up2, down1, down2, left1 ,left2, right1, right2;
+    public BufferedImage attackXCalibaUp, attackXCalibaDown, attackXCalibaLeft, attackXCalibaRight;
     public String direction;
     public String name;
     public int spriteCounter = 0;
     public int spriteNum = 1;
     public Rectangle solidArea = new Rectangle(0,0,48,48);
+    public Rectangle attackArea = new Rectangle(0,0,0,0);
     public int solidAreaDefaultX, solidAreaDefaultY;
     public Boolean collisionOn = false;
     public int maxLife;
     public int life;
     public int actionLockCounter = 0;
+    public boolean invincible = false;
+    public int invincibleCounter = 0;
+    public int type; 
+    boolean attacking = false;
 
     public Entity(GamePanel gp) {
 
@@ -41,7 +47,15 @@ public class Entity {
         collisionOn = false;
         gp.cDetection.checkTile(this);
         gp.cDetection.checkObject(this, false);
-        gp.cDetection.checkPlayer(this);
+        boolean contactPlayer = gp.cDetection.checkPlayer(this);
+
+        if (this.type == 1 && contactPlayer ==true){
+            if (gp.player.invincible ==false){
+                //player receives damage
+                gp.player.life -=1;
+                gp.player.invincible = true;
+            }
+        }
 
         if(collisionOn == false){
             switch (direction){
@@ -67,6 +81,13 @@ public class Entity {
             spriteCounter = 0;
         }
 
+        if(invincible == true){
+            invincibleCounter++;
+            if(invincibleCounter > 40){
+                invincible = false;
+                invincibleCounter = 0;
+            }
+        }
     }
 
 
@@ -84,41 +105,34 @@ public class Entity {
 
             switch (direction){
                 case "up":
-                    if (spriteNum == 1){
-                        image = up1;
-                    }
-                    if (spriteNum == 2){
-                        image = up2;
-                    }
+                    if (spriteNum == 1){image = up1;}
+                    if (spriteNum == 2){image = up2;}
                     break;
                 case "down":
-                    if (spriteNum == 1){
-                        image = down1;
-                    }
-                    if (spriteNum == 2){
-                        image = down2;
-                    }
+                    if (spriteNum == 1){image = down1;}
+                    if (spriteNum == 2){image = down2;}
                     break;
                 case "left":
-                    if (spriteNum == 1){
-                        image = left1;
+                    if (spriteNum == 1){image = left1;
                     }
-                    if (spriteNum == 2){
-                        image = left2;
-                    }
+                    if (spriteNum == 2){image = left2;}
                     break;
                 case "right":
-                    if (spriteNum == 1){
-                        image = right1;
-                    }
-                    if (spriteNum == 2){
-                        image = right2;
-                    }
+                    if (spriteNum == 1){image = right1;}
+                    if (spriteNum == 2){image = right2;}
                     break;
             }
+
+            if (invincible == true){
+                g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.4f));
+            }
+
             g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
+
+            g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
         }
     }
+
 
     public BufferedImage setup(String imagePath){
 
