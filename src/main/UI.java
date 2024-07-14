@@ -20,6 +20,7 @@ public class UI {
     public String message = "";
     public int messageCounter = 0;
     public int commandNum = 0;
+    public int pauseNum = 0;
 
 
     public UI(GamePanel gp) {
@@ -149,6 +150,31 @@ public class UI {
         int y = gp.screenHeight/2;
         g2.drawString(text, x, y);
 
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN,45F));
+        text = "Back";
+        x = gp.tileSize*4;
+        y = gp.tileSize*10;
+        g2.drawString(text, x, y );
+        if (pauseNum == 0){
+            g2.drawString(">", x-gp.tileSize, y);
+        }
+
+        text = "Save";
+        x = getXCenteredText(text);
+        y = gp.tileSize*10;
+        g2.drawString(text, x, y );
+        if (pauseNum == 1){
+            g2.drawString(">", x-gp.tileSize, y);
+        }
+
+        text = "Quit";
+        x = (int) (gp.tileSize*10.5);
+        y = gp.tileSize*10;
+        g2.drawString(text, x, y );
+        if (pauseNum == 2){
+            g2.drawString(">", x-gp.tileSize, y);
+        }
+
     }
 
     public int getXCenteredText(String text){
@@ -158,6 +184,7 @@ public class UI {
         return x;
 
     }
+
 }
 
 

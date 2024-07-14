@@ -87,9 +87,37 @@ public class KeyHandler implements KeyListener {
         //Pause State
         else if(gp.gameState == gp.pauseState){
 
-            if(code == KeyEvent.VK_E){
-                gp.gameState = gp.playState;
 
+            //Decrease pauseNum by 1 for selection
+            if(code == KeyEvent.VK_A){
+                gp.ui.pauseNum--;
+                if(gp.ui.pauseNum < 0){
+                    gp.ui.pauseNum = 2;
+                }
+            }
+
+            //Increase pauseNum by 1 for selection
+            if(code == KeyEvent.VK_D){
+                gp.ui.pauseNum++;
+                if(gp.ui.pauseNum > 2){
+                    gp.ui.pauseNum = 0;
+                }
+            }
+
+            if(code == KeyEvent.VK_SPACE){
+                if (gp.ui.pauseNum == 0){
+
+                    gp.gameState = gp.playState;
+
+                }if(gp.ui.pauseNum == 1){
+
+                    //Save Function
+
+                }if(gp.ui.pauseNum == 2){
+
+                    gp.gameState = gp.titleState;
+
+                }
             }
 
         }
