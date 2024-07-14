@@ -47,15 +47,15 @@ public class Entity {
         collisionOn = false;
         gp.cDetection.checkTile(this);
         gp.cDetection.checkObject(this, false);
-        boolean contactPlayer = gp.cDetection.checkPlayer(this);
+//        boolean contactPlayer = gp.cDetection.checkPlayer(this);
 
-        if (this.type == 1 && contactPlayer ==true){
-            if (gp.player.invincible ==false){
-                //player receives damage
-                gp.player.life -=1;
-                gp.player.invincible = true;
-            }
-        }
+//        if (this.type == 1 && contactPlayer ==true){
+//            if (gp.player.invincible ==false){
+//                //player receives damage
+//                gp.player.life -=1;
+//                gp.player.invincible = true;
+//            }
+//        }
 
         if(collisionOn == false){
             switch (direction){
@@ -81,13 +81,13 @@ public class Entity {
             spriteCounter = 0;
         }
 
-        if(invincible == true){
-            invincibleCounter++;
-            if(invincibleCounter > 40){
-                invincible = false;
-                invincibleCounter = 0;
-            }
-        }
+//        if(invincible == true){
+//            invincibleCounter++;
+//            if(invincibleCounter > 40){
+//                invincible = false;
+//                invincibleCounter = 0;
+//            }
+//        }
     }
 
 

@@ -17,7 +17,7 @@ public class OBJ_Sword extends SuperObject {
 
         try{
 
-            image = ImageIO.read(getClass().getResourceAsStream("/objects/Sword_1.png"));
+            image = ImageIO.read(getClass().getResourceAsStream("/objects/Sword.png"));
             uTool.scaleImage(image, gp.tileSize, gp.tileSize);
 
 
