@@ -3,23 +3,23 @@ package entity;
 import main.GamePanel;
 import java.util.Random;
 
-public class MON_Pred extends Entity {
+public class MON_Bear extends Entity {
 
     GamePanel gp;
 
 
-    public MON_Pred (GamePanel gp){
+    public MON_Bear (GamePanel gp){
 
         super(gp);
         this.gp = gp;
 
         type = 1;
-        name= "Predator";
+        name = "Bear";
         direction = "right";
-        speed= 5;
+        speed= 1;
         maxLife = 5;
         life = maxLife;
-        
+
         getImage();
         setAction();
 
@@ -27,14 +27,14 @@ public class MON_Pred extends Entity {
 
     public void getImage(){
 
-        up1 = setup("/monster/Predator_Up1");
-        up2 = setup("/monster/Predator_Up2");
-        down1 = setup("/monster/Predator_Down1");
-        down2 = setup("/monster/Predator_Down2");
-        left1 = setup("/monster/Predator_Left1");
-        left2 = setup("/monster/Predator_Left2");
-        right1 = setup("/monster/Predator_Right1");
-        right2 = setup("/monster/Predator_Right2");
+        up1 = setup("/monster/Bear_Up1");
+        up2 = setup("/monster/Bear_Up2");
+        down1 = setup("/monster/Bear_Down1");
+        down2 = setup("/monster/Bear_Down2");
+        left1 = setup("/monster/Bear_Left1");
+        left2 = setup("/monster/Bear_Left2");
+        right1 = setup("/monster/Bear_Right1");
+        right2 = setup("/monster/Bear_Right2");
     }
 
     public void setAction(){

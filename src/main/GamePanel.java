@@ -35,7 +35,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     //Entity, Object
     public Player player = new Player(this,keyH);
-    public Entity[] monster = new Entity[20];
+    public Entity[] monster = new Entity[50];
     public SuperObject[] obj = new SuperObject[50];
 
     //Game State
@@ -145,7 +145,7 @@ public class GamePanel extends JPanel implements Runnable {
         double delta = 0;
         long lastTime = System.nanoTime();
         long currentTime;
-        long timer = 0;
+//        long timer = 0;
 //        long drawCount = 0;
 
         while (gameThread != null) {

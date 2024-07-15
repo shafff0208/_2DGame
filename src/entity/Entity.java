@@ -48,7 +48,7 @@ public class Entity {
         gp.cDetection.checkTile(this);
         gp.cDetection.checkObject(this, false);
 //        boolean contactPlayer = gp.cDetection.checkPlayer(this);
-
+//
 //        if (this.type == 1 && contactPlayer ==true){
 //            if (gp.player.invincible ==false){
 //                //player receives damage

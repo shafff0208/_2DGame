@@ -15,7 +15,8 @@ public class MON_MutantTreant extends Entity {
 
         type = 1;
         name = "MutantTreant";
-        speed= 3;
+        direction = "right";
+        speed= 1;
         maxLife = 5;
         life = maxLife;
         
