@@ -2,6 +2,7 @@ package main;
 
 import object.OBJ_Life;
 import object.SuperObject;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.awt.Color;
@@ -17,10 +18,14 @@ public class UI {
     Font customFont;
     BufferedImage Heart;
     public boolean messageOn = false;
+    public boolean stageOn = true;
     public String message = "";
     public int messageCounter = 0;
+    public int stageOnCounter = 0;
     public int commandNum = 0;
     public int pauseNum = 0;
+    public int stageNum = 0;
+    public int endNum = 0;
 
 
     public UI(GamePanel gp) {
@@ -58,7 +63,11 @@ public class UI {
         //Play State
         if(gp.gameState == gp.playState){
             //Do play stuff
+
+            drawTimer();
             drawPlayerLife();
+            drawStartingStage();
+
             if (messageOn == true){
                 g2.setFont(g2.getFont().deriveFont(20F));
                 g2.drawString(message, gp.tileSize/2, gp.tileSize*5 );
@@ -70,11 +79,18 @@ public class UI {
                 }
             }
         }
-
         //Pause State
         if(gp.gameState == gp.pauseState){
             //Do pause stuff
             drawPauseScreen();
+        }
+        //Continue State
+        if(gp.gameState == gp.continueState){
+            drawStagePrompt();
+        }
+        //End State
+        if(gp.gameState == gp.endState){
+            drawGameOverScreen();
         }
 
     }
@@ -146,7 +162,6 @@ public class UI {
         String text = "PAUSED";
         g2.setFont(g2.getFont().deriveFont(Font.PLAIN,80F));
         int x = getXCenteredText(text);
-
         int y = gp.screenHeight/2;
         g2.drawString(text, x, y);
 
@@ -172,6 +187,87 @@ public class UI {
         y = gp.tileSize*10;
         g2.drawString(text, x, y );
         if (pauseNum == 2){
+            g2.drawString(">", x-gp.tileSize, y);
+        }
+
+    }
+
+    public void drawTimer(){
+
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN,45F));
+        int x = gp.screenWidth/2 - gp.tileSize;
+        g2.drawString(gp.stageMinutes + "m" + gp.stageSeconds + "s", x, 68);
+
+    }
+
+    public void drawStartingStage(){
+
+       if (stageOn == true){
+
+           g2.setFont(g2.getFont().deriveFont(Font.PLAIN,80F));
+           String text = "STAGE " + gp.currentStage;
+           int x = getXCenteredText(text);
+           int y = gp.screenHeight/2;
+           g2.drawString(text, x, y);
+           stageOnCounter++;
+           if (stageOnCounter > 90){
+               stageOnCounter = 0;
+               stageOn = false;
+           }
+       }
+    }
+
+    public void drawStagePrompt(){
+
+        String text = "STAGE " + gp.currentStage + " COMPLETE";
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN,80F));
+        int x = getXCenteredText(text);
+        int y = gp.screenHeight/2;
+        g2.drawString(text, x, y);
+
+        text = "Continue?";
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN,45F));
+        x = getXCenteredText(text);
+        y += gp.tileSize;
+        g2.drawString(text, x, y );
+
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN,45F));
+        text = "Yes";
+        x = gp.screenWidth/2 - (gp.tileSize*3);
+        y = gp.tileSize*10;
+        g2.drawString(text, x, y );
+        if (stageNum == 0){
+            g2.drawString(">", x-gp.tileSize, y);
+        }
+
+        text = "No";
+        x = gp.screenWidth/2 + (gp.tileSize*2);
+        y = gp.tileSize*10;
+        g2.drawString(text, x, y );
+        if (stageNum == 1){
+            g2.drawString(">", x-gp.tileSize, y);
+        }
+    }
+
+    public void drawGameOverScreen(){
+
+        String text = "GAME OVER";
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN,80F));
+        int x = getXCenteredText(text);
+        int y = gp.screenHeight/2;
+        g2.drawString(text, x, y);
+
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN,45F));
+        text = "Thanks For Playing";
+        x = getXCenteredText(text);
+        y += gp.tileSize;
+        g2.drawString(text, x, y );
+
+        text = "Back to Title Screen";
+        x = getXCenteredText(text);
+        y = gp.tileSize*10;
+        g2.drawString(text, x, y );
+        if (endNum == 0){
             g2.drawString(">", x-gp.tileSize, y);
         }
 
