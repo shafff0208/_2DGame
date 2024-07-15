@@ -126,6 +126,7 @@ public class Player extends Entity{
             String objectName = gp.obj[i].name;
             switch (objectName){
                 case "Normal Gun":
+                    gp.playSE(4);
                     hasGun++;
                     gp.obj[i] = null;
                     gp.ui.showMessage("+1 Normal Gun");
@@ -133,12 +134,14 @@ public class Player extends Entity{
                     break;
 
                 case "XCALIBA" :
+                    gp.playSE(4);
                     hasSword++;
                     gp.obj[i] = null;
                     gp.ui.showMessage("+1 XCALIBA");
                     break;
 
                 case "Life":
+                    gp.playSE(3);
                     life++;
                     gp.obj[i] = null;
                     gp.ui.showMessage("+1 life");
@@ -151,6 +154,7 @@ public class Player extends Entity{
 
     public void interactMON(int i){
         if(i != 999){
+            gp.playSE(7);
             System.out.println("Collision!");
         }
     }

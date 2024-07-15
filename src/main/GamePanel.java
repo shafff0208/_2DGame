@@ -32,6 +32,7 @@ public class GamePanel extends JPanel implements Runnable {
     public CollisionDetection cDetection = new CollisionDetection(this);
     public AssetSetter aSetter = new AssetSetter(this);
     public UI ui = new UI(this);
+    Sound sound = new Sound();
 
     //Entity, Object
     public Player player = new Player(this,keyH);
@@ -71,6 +72,7 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void setupGame() {
+        playMusic(0);
         gameState = titleState;
         currentStage = firstStage;
         aSetter.setObject();
@@ -216,6 +218,20 @@ public class GamePanel extends JPanel implements Runnable {
         }
 
         g2.dispose();
+    }
+    public void playMusic(int i) {
+        sound.setFile(i);
+        sound.play();
+        sound.loop();
+    }
+
+    public void stopMusic() {
+        sound.stop();
+    }
+
+    public void playSE(int i) {
+        sound.setFile(i);
+        sound.play();
     }
 
 }
