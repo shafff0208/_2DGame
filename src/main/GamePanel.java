@@ -14,7 +14,7 @@ public class GamePanel extends JPanel implements Runnable {
     final int originalTileSize = 16; // 16x16
     final int scale = 3;
     public int tileSize = originalTileSize * scale; //48 tiles
-    public int maxScreenCol = 16;
+    public final int maxScreenCol = 16;
     public final int maxScreenRow = 12;
     public final int screenWidth = tileSize * maxScreenCol;
     public final int screenHeight = tileSize * maxScreenRow;
@@ -32,10 +32,10 @@ public class GamePanel extends JPanel implements Runnable {
     public CollisionDetection cDetection = new CollisionDetection(this);
     public AssetSetter aSetter = new AssetSetter(this);
     public UI ui = new UI(this);
+
     //Entity, Object
     public Player player = new Player(this,keyH);
     public Entity[] monster = new Entity[20];
-
     public SuperObject[] obj = new SuperObject[50];
 
     //Game State
@@ -43,116 +43,179 @@ public class GamePanel extends JPanel implements Runnable {
     public final int titleState = 0;
     public final int playState = 1;
     public final int pauseState = 2;
+    public final int continueState = 3; //Can change to scientist interaction State
+    public final int endState = 4; //Can display different endings (need add more states)
+
+    //Stage Timer
+    public Timer stageTimer;
+    public long stageStartTime;
+    public int stageSeconds;
+    public int stageMinutes;
+
+    //Stages
+    public int currentStage;
+    public final int firstStage = 1;
+    public final int secondStage = 2;
+    public final int thirdStage = 3;
 
 
     public GamePanel() {
-
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setBackground(Color.black);
         this.setDoubleBuffered(true);
         this.addKeyListener(keyH);
         this.setFocusable(true);
+
+        stageTimer = new Timer(1000, e -> updateStageTime());
+
     }
 
-    public void setupGame(){
-
+    public void setupGame() {
+        gameState = titleState;
+        currentStage = firstStage;
         aSetter.setObject();
         aSetter.setMON();
-        gameState = titleState;
+    }
+
+    public void stageProgression() {
+
+            long currentTime = System.currentTimeMillis();
+            long elapsedTime = (currentTime - stageStartTime) / 1000;
+            stageMinutes = (int) (elapsedTime / 60);
+            stageSeconds = (int) (elapsedTime % 60);
+
+            //Change stageMinutes for faster stage progression
+//        if (currentStage == firstStage && stageMinutes >= 1) {
+//            gameState = continueState;
+//            stageStartTime = System.currentTimeMillis();
+//
+//        } else if (currentStage == secondStage && stageMinutes >= 1) {
+//            gameState = continueState;
+//            stageStartTime = System.currentTimeMillis();
+//
+//        } else if (currentStage == thirdStage && stageMinutes >= 1) {
+//            gameState = endState;
+//        }
+
+            //For testing (Comment code if too fast)
+            if (currentStage == firstStage && stageSeconds >= 20) {
+                gameState = continueState;
+                ui.stageOn = true;
+                stageStartTime = System.currentTimeMillis();
+
+            } else if (currentStage == secondStage && stageSeconds >= 20) {
+                gameState = continueState;
+                ui.stageOn = true;
+                stageStartTime = System.currentTimeMillis();
+
+            } else if (currentStage == thirdStage && stageSeconds >= 20) {
+                currentStage = firstStage;
+                gameState = endState;
+                player.worldX= tileSize * 26;
+                player.worldY= tileSize * 27;
+            }
 
     }
 
+    public void startStageTimer() {
+
+        if (gameState == playState) {
+            stageStartTime = System.currentTimeMillis();
+            stageTimer.start();
+        }else{
+            stageTimer.stop();
+        }
+    }
+
+    private void updateStageTime() {
+        if (gameState == playState) {
+            stageProgression();
+        }else{
+            stageTimer.stop();
+        }
+    }
 
     public void startGameThread() {
-        //introducing a time element into the game
         gameThread = new Thread(this);
         gameThread.start();
     }
 
-    public void run(){
+    public void run() {
         double drawInterval = 1000000000/FPS;
         double delta = 0;
         long lastTime = System.nanoTime();
         long currentTime;
         long timer = 0;
-        long drawCount = 0;
+//        long drawCount = 0;
 
-        while (gameThread != null){
-
+        while (gameThread != null) {
             currentTime = System.nanoTime();
             delta += (currentTime - lastTime)/drawInterval;
-            timer += (currentTime - lastTime);
+//            timer += (currentTime - lastTime);
             lastTime = currentTime;
 
-
-            if(delta >=1){
+            if(delta >= 1) {
                 update();
                 repaint();
                 delta--;
-                drawCount++;
+//                drawCount++;
             }
 
-            if (timer >= 1000000000){
-
-                //display FPS
-                System.out.println("FPS: " + drawCount);
-                drawCount = 0;
-                timer = 0;
-            }
+//            if (timer >= 1000000000) {
+//                timer = 0;
+//            }
         }
     }
 
     public void update() {
-
-        if(gameState == playState){
+        if(gameState == playState) {
             player.update();
-            for(int i = 0; i < monster.length; i++){
-                if(monster[i] != null){
+            for(int i = 0; i < monster.length; i++) {
+                if(monster[i] != null) {
                     monster[i].update();
                 }
             }
+            stageProgression();
         }
-        if(gameState == pauseState){
-            //do nothing
-        }
-
     }
 
     public void paintComponent(Graphics g) {
-
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
 
         //Title Screen
-        if (gameState == titleState){
+        if (gameState == titleState) {
+            ui.draw(g2);
+        }if(gameState == endState){
             ui.draw(g2);
         }else {
 
-                //Draw Tiles
-                tileM.draw(g2);
+            //Draw Tiles
+            tileM.draw(g2);
 
-                //Draw Object
-                for(int i = 0; i < obj.length; i++){
-                    if (obj[i] != null){
-                        obj[i].draw(g2, this);
-                    }
+
+            //Draw Objects
+            for(int i = 0; i < obj.length; i++) {
+                if (obj[i] != null) {
+                    obj[i].draw(g2, this);
                 }
-
-                //Draw Monsters
-                for(int i = 0; i < monster.length; i++){
-                    if (monster[i] != null){
-                        monster[i].draw(g2);
-                    }
-                }
-
-                //Draw Player
-                player.draw(g2);
-
-                //Draw UI
-                ui.draw(g2);
             }
 
-        g2.dispose();
+            //Draw Monsters
+            for(int i = 0; i < monster.length; i++) {
+                if (monster[i] != null) {
+                    monster[i].draw(g2);
+                }
+            }
 
+            //Draw Player
+            player.draw(g2);
+
+            //Draw UI
+            ui.draw(g2);
+        }
+
+        g2.dispose();
     }
+
 }
