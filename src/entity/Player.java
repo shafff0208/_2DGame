@@ -5,7 +5,8 @@ import main.KeyHandler;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class Player extends Entity {
+
+public class Player extends Entity{
 
     GamePanel gp;
     KeyHandler keyH;
@@ -14,14 +15,14 @@ public class Player extends Entity {
     int hasGun = 0;
     int hasSword = 0;
 
-    public Player(GamePanel gp, KeyHandler keyH) {
+    public Player (GamePanel gp, KeyHandler keyH){
 
         super(gp);
         this.gp = gp;
         this.keyH = keyH;
 
-        screenX = gp.screenWidth / 2 - (gp.tileSize / 2);
-        screenY = gp.screenHeight / 2 - (gp.tileSize / 2);
+        screenX = gp.screenWidth/2 - (gp.tileSize/2);
+        screenY = gp.screenHeight/2 - (gp.tileSize/2);
 
         setDefaultValues();
         getPlayerImage();
@@ -35,20 +36,20 @@ public class Player extends Entity {
         solidArea.width = 32;
     }
 
-    public void setDefaultValues() {
+    public void setDefaultValues(){
 
-        // Player position
-        worldX = gp.tileSize * 26;
-        worldY = gp.tileSize * 27;
+        //Player position
+        worldX= gp.tileSize * 26;
+        worldY= gp.tileSize * 27;
 
-        // Player Status
+        //Player Status
         speed = 4;
         direction = "right";
         maxLife = 5;
         life = maxLife;
     }
 
-    public void getPlayerImage() {
+    public void getPlayerImage(){
 
         up1 = setup("/player/Player_Up1");
         up2 = setup("/player/Player_Up2");
@@ -61,10 +62,10 @@ public class Player extends Entity {
 
     }
 
-    public void update() {
+    public void update(){
 
         if (keyH.upPressed == true || keyH.downPressed == true ||
-                keyH.leftPressed == true || keyH.rightPressed == true) {
+                keyH.leftPressed == true || keyH.rightPressed == true){
 
             if (keyH.upPressed == true) {
                 direction = "up";
@@ -80,42 +81,39 @@ public class Player extends Entity {
 
             }
 
-            // Check Tile Collision
+            //Check Tile Collision
             collisionOn = false;
             gp.cDetection.checkTile(this);
 
-            // Check Obj Collision
+            //Check Obj Collision
             int objIndex = gp.cDetection.checkObject(this, true);
             pickUpObj(objIndex);
 
-            // Check Entity Collision
+            //Check Entity Collision
             int monIndex = gp.cDetection.checkEntity(this, gp.monster);
             interactMON(monIndex);
 
-            if (collisionOn == false) {
-                switch (direction) {
-                    case "up":
-                        worldY -= speed;
+
+            if(collisionOn == false){
+                switch (direction){
+                    case "up": worldY -= speed;
                         break;
-                    case "down":
-                        worldY += speed;
+                    case "down": worldY += speed;
                         break;
-                    case "left":
-                        worldX -= speed;
+                    case "left": worldX -= speed;
                         break;
-                    case "right":
-                        worldX += speed;
+                    case "right": worldX += speed;
                         break;
 
                 }
             }
 
             spriteCounter++;
-            if (spriteCounter > 12) {
-                if (spriteNum == 1) {
+            if (spriteCounter > 12){
+                if (spriteNum == 1){
                     spriteNum = 2;
-                } else if (spriteNum == 2) {
-                    spriteNum = 1;
+                }else if (spriteNum == 2){
+                    spriteNum =1;
                 }
                 spriteCounter = 0;
             }
@@ -123,26 +121,24 @@ public class Player extends Entity {
 
     }
 
-    public void pickUpObj(int i) {
-        if (i != 999) {
+    public void pickUpObj(int i){
+        if(i != 999){
             String objectName = gp.obj[i].name;
-            switch (objectName) {
+            switch (objectName){
                 case "Normal Gun":
-                    gp.playSE(4);
                     hasGun++;
                     gp.obj[i] = null;
                     gp.ui.showMessage("+1 Normal Gun");
 
                     break;
 
-                case "XCALIBA":
+                case "XCALIBA" :
                     hasSword++;
                     gp.obj[i] = null;
                     gp.ui.showMessage("+1 XCALIBA");
                     break;
 
                 case "Life":
-                    gp.playSE(3);
                     life++;
                     gp.obj[i] = null;
                     gp.ui.showMessage("+1 life");
@@ -153,46 +149,45 @@ public class Player extends Entity {
         }
     }
 
-    public void interactMON(int i) {
-        if (i != 999) {
-            gp.playSE(7);
+    public void interactMON(int i){
+        if(i != 999){
             System.out.println("Collision!");
         }
     }
 
-    public void draw(Graphics2D g2) {
+    public void draw(Graphics2D g2){
 
         BufferedImage image = null;
-        switch (direction) {
+        switch (direction){
             case "up":
-                if (spriteNum == 1) {
+                if (spriteNum == 1){
                     image = up1;
                 }
-                if (spriteNum == 2) {
+                if (spriteNum == 2){
                     image = up2;
                 }
                 break;
             case "down":
-                if (spriteNum == 1) {
+                if (spriteNum == 1){
                     image = down1;
                 }
-                if (spriteNum == 2) {
+                if (spriteNum == 2){
                     image = down2;
                 }
                 break;
             case "left":
-                if (spriteNum == 1) {
+                if (spriteNum == 1){
                     image = left1;
                 }
-                if (spriteNum == 2) {
+                if (spriteNum == 2){
                     image = left2;
                 }
                 break;
             case "right":
-                if (spriteNum == 1) {
+                if (spriteNum == 1){
                     image = right1;
                 }
-                if (spriteNum == 2) {
+                if (spriteNum == 2){
                     image = right2;
                 }
                 break;

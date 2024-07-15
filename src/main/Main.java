@@ -19,7 +19,5 @@ public class Main {
         gp.setupGame();
         gp.startGameThread();
 
-        // Test
-
     }
 }
