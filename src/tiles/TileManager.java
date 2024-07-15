@@ -21,13 +21,12 @@ public class TileManager {
 
         this.gp = gp;
         tile = new Tile [10];
+        getTileImage();
         mapTileNum = new int[gp.maxWorldCol][gp.maxWorldRow];
 
-        getTileImage();
         loadMap("/maps/Map2(50x50).txt");
 
     }
-
 
 
     //Read map txt file
