@@ -46,6 +46,7 @@ public class KeyHandler implements KeyListener {
                 if (gp.ui.commandNum == 0) {
 
                     gp.gameState = gp.playState;
+                    gp.playSE(2);
                     gp.startStageTimer() ;
 
                 }
@@ -89,8 +90,11 @@ public class KeyHandler implements KeyListener {
         //Pause State
         else if (gp.gameState == gp.pauseState) {
 
+
+
             if (code == KeyEvent.VK_E) {
                 gp.gameState = gp.playState;
+                gp.playMusic(1);
             }
 
             //Decrease pauseNum by 1 for selection
@@ -113,15 +117,17 @@ public class KeyHandler implements KeyListener {
                 if (gp.ui.pauseNum == 0) {
 
                     gp.gameState = gp.playState;
+                    gp.playSE(2);
 
                 }
                 if (gp.ui.pauseNum == 1) {
 
                     //Save Function
+                    gp.playSE(2);
 
                 }
                 if (gp.ui.pauseNum == 2) {
-
+                    gp.playSE(2);
                     gp.gameState = gp.titleState;
 
                 }
@@ -152,10 +158,12 @@ public class KeyHandler implements KeyListener {
                 if (gp.ui.stageNum == 0) {
                     gp.currentStage++;
                     gp.gameState = gp.playState;
+                    gp.playSE(2);
                     System.out.println("New Stage");
 
                 }
                 if (gp.ui.stageNum == 1) {
+                    gp.playSE(2);
                     gp.gameState = gp.titleState;
                 }
 
