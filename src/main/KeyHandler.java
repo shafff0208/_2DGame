@@ -46,8 +46,9 @@ public class KeyHandler implements KeyListener {
                 if (gp.ui.commandNum == 0) {
 
                     gp.gameState = gp.playState;
+                    gp.startStageTimer();
                     gp.playSE(2);
-                    gp.startStageTimer() ;
+
 
                 }
                 if (gp.ui.commandNum == 1) {
@@ -156,10 +157,12 @@ public class KeyHandler implements KeyListener {
             }
             if (code == KeyEvent.VK_SPACE) {
                 if (gp.ui.stageNum == 0) {
-                    gp.currentStage++;
+                    gp.checkStage();
                     gp.gameState = gp.playState;
                     gp.playSE(2);
-                    System.out.println("New Stage");
+
+                    //DEBUG
+                    System.out.println(STR."Stage: \{gp.currentStage}");
 
                 }
                 if (gp.ui.stageNum == 1) {
