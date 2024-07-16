@@ -219,7 +219,7 @@ public class UI {
 
     public void drawStagePrompt(){
 
-        String text = "STAGE " + gp.currentStage + " COMPLETE";
+        String text = "STAGE COMPLETE";
         g2.setFont(g2.getFont().deriveFont(Font.PLAIN,80F));
         int x = getXCenteredText(text);
         int y = gp.screenHeight/2;
