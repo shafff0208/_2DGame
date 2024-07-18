@@ -63,17 +63,17 @@ public class Player extends Entity{
     }
 
     public void setupPlayerPos(){
-        if(gp.currentStage == gp.firstStage){
+        if(gp.stage.currentStage == gp.stage.firstStage){
 
             worldX= gp.tileSize * 8;
             worldY= gp.tileSize * 16;
 
-        }else if (gp.currentStage == gp.secondStage){
+        }else if (gp.stage.currentStage == gp.stage.secondStage){
 
             worldX= gp.tileSize * 40;
             worldY= gp.tileSize * 12;
 
-        }else if (gp.currentStage == gp.thirdStage){
+        }else if (gp.stage.currentStage == gp.stage.thirdStage){
             worldX= gp.tileSize * 26;
             worldY= gp.tileSize * 27;
         }
