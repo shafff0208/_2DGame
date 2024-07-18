@@ -32,6 +32,7 @@ public class GamePanel extends JPanel implements Runnable {
     public CollisionDetection cDetection = new CollisionDetection(this);
     public AssetSetter aSetter = new AssetSetter(this);
     public UI ui = new UI(this);
+    public Stage stage = new Stage (this);
     Sound sound = new Sound();
 
     //Entity, Object
@@ -47,17 +48,17 @@ public class GamePanel extends JPanel implements Runnable {
     public final int continueState = 3; //Can change to scientist interaction State
     public final int endState = 4; //Can display different endings (need add more states)
 
-    //Stage Timer
-    public Timer stageTimer;
-    public long stageStartTime;
-    public int stageSeconds;
-    public int stageMinutes;
-
-    //Stages
-    public int currentStage;
-    public final int firstStage = 1;
-    public final int secondStage = 2;
-    public final int thirdStage = 3;
+//    //Stage Timer
+//    public Timer stageTimer;
+//    public long stageStartTime;
+//    public int stageSeconds;
+//    public int stageMinutes;
+//
+//    //Stages
+//    public int currentStage;
+//    public final int firstStage = 1;
+//    public final int secondStage = 2;
+//    public final int thirdStage = 3;
 
 
     public GamePanel() {
@@ -67,77 +68,77 @@ public class GamePanel extends JPanel implements Runnable {
         this.addKeyListener(keyH);
         this.setFocusable(true);
 
-        stageTimer = new Timer(1000, e -> updateStageTime());
+        stage.stageTimer = new Timer(1000, e -> stage.updateStageTime());
 
     }
 
     public void setupGame() {
         playMusic(0);
         gameState = titleState;
-        currentStage = firstStage;
+        stage.currentStage = stage.firstStage;
         aSetter.setObject();
         aSetter.setMON();
     }
 
-    public void checkStage() {
-
-            long currentTime = System.currentTimeMillis();
-            long elapsedTime = (currentTime - stageStartTime) / 1000;
-            stageMinutes = (int) (elapsedTime / 60);
-            stageSeconds = (int) (elapsedTime % 60);
-
-        //Change stageSeconds to stageMinutes for stage progression
-        if (currentStage == firstStage && stageSeconds ==0){
-            player.setupPlayerPos();
-            tileM.setupMap();
-            ui.stageOn = true;
-
-        }
-        else if (currentStage == firstStage && stageSeconds >= 20) {
-            gameState = continueState;
-            currentStage++;
-            player.setupPlayerPos();
-            tileM.setupMap();
-            ui.stageOn = true;
-            stageStartTime = System.currentTimeMillis();
-
-        } else if (currentStage == secondStage && stageSeconds >= 20) {
-            gameState = continueState;
-            currentStage++;
-            player.setupPlayerPos();
-            tileM.setupMap();
-            ui.stageOn = true;
-            stageStartTime = System.currentTimeMillis();
-
-        } else if (currentStage == thirdStage && stageSeconds >= 20) {
-            currentStage = firstStage;
-            tileM.setupMap();
-            gameState = endState;
-            player.worldX= tileSize * 26;
-            player.worldY= tileSize * 27;
-        }
-//        //DEBUG
-//         System.out.println("Stage: " + currentStage);
-
-    }
-
-    public void startStageTimer() {
-
-        if (gameState == playState) {
-            stageStartTime = System.currentTimeMillis();
-            stageTimer.start();
-        }else{
-            stageTimer.stop();
-        }
-    }
-
-    private void updateStageTime() {
-        if (gameState == playState) {
-            checkStage();
-        }else{
-            stageTimer.stop();
-        }
-    }
+//    public void checkStage() {
+//
+//            long currentTime = System.currentTimeMillis();
+//            long elapsedTime = (currentTime - stageStartTime) / 1000;
+//            stageMinutes = (int) (elapsedTime / 60);
+//            stageSeconds = (int) (elapsedTime % 60);
+//
+//        //Change stageSeconds to stageMinutes for stage progression
+//        if (currentStage == firstStage && stageSeconds ==0){
+//            player.setupPlayerPos();
+//            tileM.setupMap();
+//            ui.stageOn = true;
+//
+//        }
+//        else if (currentStage == firstStage && stageSeconds >= 20) {
+//            gameState = continueState;
+//            currentStage++;
+//            player.setupPlayerPos();
+//            tileM.setupMap();
+//            ui.stageOn = true;
+//            stageStartTime = System.currentTimeMillis();
+//
+//        } else if (currentStage == secondStage && stageSeconds >= 20) {
+//            gameState = continueState;
+//            currentStage++;
+//            player.setupPlayerPos();
+//            tileM.setupMap();
+//            ui.stageOn = true;
+//            stageStartTime = System.currentTimeMillis();
+//
+//        } else if (currentStage == thirdStage && stageSeconds >= 20) {
+//            currentStage = firstStage;
+//            tileM.setupMap();
+//            gameState = endState;
+//            player.worldX= tileSize * 26;
+//            player.worldY= tileSize * 27;
+//        }
+////        //DEBUG
+////         System.out.println("Stage: " + currentStage);
+//
+//    }
+//
+//    public void startStageTimer() {
+//
+//        if (gameState == playState) {
+//            stageStartTime = System.currentTimeMillis();
+//            stageTimer.start();
+//        }else{
+//            stageTimer.stop();
+//        }
+//    }
+//
+//    private void updateStageTime() {
+//        if (gameState == playState) {
+//            checkStage();
+//        }else{
+//            stageTimer.stop();
+//        }
+//    }
 
     public void startGameThread() {
         gameThread = new Thread(this);
@@ -171,7 +172,7 @@ public class GamePanel extends JPanel implements Runnable {
                     monster[i].update();
                 }
             }
-            checkStage();
+            stage.checkStage();
         }
     }
 

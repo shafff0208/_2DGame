@@ -27,11 +27,11 @@ public class TileManager {
     }
 
     public void setupMap(){
-        if(gp.currentStage == gp.firstStage){
+        if(gp.stage.currentStage == gp.stage.firstStage){
             loadMap("/maps/Map0(50x50).txt");
-        }else if (gp.currentStage == gp.secondStage){
+        }else if (gp.stage.currentStage == gp.stage.secondStage){
             loadMap("/maps/Map1(50x50).txt");
-        }else if (gp.currentStage == gp.thirdStage){
+        }else if (gp.stage.currentStage == gp.stage.thirdStage){
             loadMap("/maps/Map2(50x50).txt");
         }
 //        //DEBUG

@@ -196,7 +196,7 @@ public class UI {
 
         g2.setFont(g2.getFont().deriveFont(Font.PLAIN,45F));
         int x = gp.screenWidth/2 - gp.tileSize;
-        g2.drawString(gp.stageMinutes + "m" + gp.stageSeconds + "s", x, 68);
+        g2.drawString(gp.stage.stageMinutes + "m" + gp.stage.stageSeconds + "s", x, 68);
 
     }
 
@@ -205,7 +205,7 @@ public class UI {
        if (stageOn == true){
 
            g2.setFont(g2.getFont().deriveFont(Font.PLAIN,80F));
-           String text = "STAGE " + gp.currentStage;
+           String text = "STAGE " + gp.stage.currentStage;
            int x = getXCenteredText(text);
            int y = gp.screenHeight/2;
            g2.drawString(text, x, y);
