@@ -24,7 +24,18 @@ public class TileManager {
         getTileImage();
         mapTileNum = new int[gp.maxWorldCol][gp.maxWorldRow];
 
-        loadMap("/maps/Map2(50x50).txt");
+    }
+
+    public void setupMap(){
+        if(gp.currentStage == gp.firstStage){
+            loadMap("/maps/Map0(50x50).txt");
+        }else if (gp.currentStage == gp.secondStage){
+            loadMap("/maps/Map1(50x50).txt");
+        }else if (gp.currentStage == gp.thirdStage){
+            loadMap("/maps/Map2(50x50).txt");
+        }
+//        //DEBUG
+//        System.out.println(STR."File \{gp.currentStage} Loaded");
 
     }
 

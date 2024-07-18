@@ -32,10 +32,11 @@ public class GamePanel extends JPanel implements Runnable {
     public CollisionDetection cDetection = new CollisionDetection(this);
     public AssetSetter aSetter = new AssetSetter(this);
     public UI ui = new UI(this);
+    Sound sound = new Sound();
 
     //Entity, Object
     public Player player = new Player(this,keyH);
-    public Entity[] monster = new Entity[20];
+    public Entity[] monster = new Entity[50];
     public SuperObject[] obj = new SuperObject[50];
 
     //Game State
@@ -71,49 +72,52 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void setupGame() {
+        playMusic(0);
         gameState = titleState;
         currentStage = firstStage;
         aSetter.setObject();
         aSetter.setMON();
     }
 
-    public void stageProgression() {
+    public void checkStage() {
 
             long currentTime = System.currentTimeMillis();
             long elapsedTime = (currentTime - stageStartTime) / 1000;
             stageMinutes = (int) (elapsedTime / 60);
             stageSeconds = (int) (elapsedTime % 60);
 
-            //Change stageMinutes for faster stage progression
-//        if (currentStage == firstStage && stageMinutes >= 1) {
-//            gameState = continueState;
-//            stageStartTime = System.currentTimeMillis();
-//
-//        } else if (currentStage == secondStage && stageMinutes >= 1) {
-//            gameState = continueState;
-//            stageStartTime = System.currentTimeMillis();
-//
-//        } else if (currentStage == thirdStage && stageMinutes >= 1) {
-//            gameState = endState;
-//        }
+        //Change stageSeconds to stageMinutes for stage progression
+        if (currentStage == firstStage && stageSeconds ==0){
+            player.setupPlayerPos();
+            tileM.setupMap();
+            ui.stageOn = true;
 
-            //For testing (Comment code if too fast)
-            if (currentStage == firstStage && stageSeconds >= 20) {
-                gameState = continueState;
-                ui.stageOn = true;
-                stageStartTime = System.currentTimeMillis();
+        }
+        else if (currentStage == firstStage && stageSeconds >= 20) {
+            gameState = continueState;
+            currentStage++;
+            player.setupPlayerPos();
+            tileM.setupMap();
+            ui.stageOn = true;
+            stageStartTime = System.currentTimeMillis();
 
-            } else if (currentStage == secondStage && stageSeconds >= 20) {
-                gameState = continueState;
-                ui.stageOn = true;
-                stageStartTime = System.currentTimeMillis();
+        } else if (currentStage == secondStage && stageSeconds >= 20) {
+            gameState = continueState;
+            currentStage++;
+            player.setupPlayerPos();
+            tileM.setupMap();
+            ui.stageOn = true;
+            stageStartTime = System.currentTimeMillis();
 
-            } else if (currentStage == thirdStage && stageSeconds >= 20) {
-                currentStage = firstStage;
-                gameState = endState;
-                player.worldX= tileSize * 26;
-                player.worldY= tileSize * 27;
-            }
+        } else if (currentStage == thirdStage && stageSeconds >= 20) {
+            currentStage = firstStage;
+            tileM.setupMap();
+            gameState = endState;
+            player.worldX= tileSize * 26;
+            player.worldY= tileSize * 27;
+        }
+//        //DEBUG
+//         System.out.println("Stage: " + currentStage);
 
     }
 
@@ -129,7 +133,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     private void updateStageTime() {
         if (gameState == playState) {
-            stageProgression();
+            checkStage();
         }else{
             stageTimer.stop();
         }
@@ -145,25 +149,17 @@ public class GamePanel extends JPanel implements Runnable {
         double delta = 0;
         long lastTime = System.nanoTime();
         long currentTime;
-        long timer = 0;
-//        long drawCount = 0;
 
         while (gameThread != null) {
             currentTime = System.nanoTime();
             delta += (currentTime - lastTime)/drawInterval;
-//            timer += (currentTime - lastTime);
             lastTime = currentTime;
 
             if(delta >= 1) {
                 update();
                 repaint();
                 delta--;
-//                drawCount++;
             }
-
-//            if (timer >= 1000000000) {
-//                timer = 0;
-//            }
         }
     }
 
@@ -175,7 +171,7 @@ public class GamePanel extends JPanel implements Runnable {
                     monster[i].update();
                 }
             }
-            stageProgression();
+            checkStage();
         }
     }
 
@@ -186,7 +182,9 @@ public class GamePanel extends JPanel implements Runnable {
         //Title Screen
         if (gameState == titleState) {
             ui.draw(g2);
-        }if(gameState == endState){
+        }else if(gameState == continueState){
+            ui.draw(g2);
+        }else if(gameState == endState){
             ui.draw(g2);
         }else {
 
@@ -216,6 +214,20 @@ public class GamePanel extends JPanel implements Runnable {
         }
 
         g2.dispose();
+    }
+    public void playMusic(int i) {
+        sound.setFile(i);
+        sound.play();
+        sound.loop();
+    }
+
+    public void stopMusic() {
+        sound.stop();
+    }
+
+    public void playSE(int i) {
+        sound.setFile(i);
+        sound.play();
     }
 
 }

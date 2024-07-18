@@ -15,6 +15,7 @@ public class MON_Pred extends Entity {
 
         type = 1;
         name= "Predator";
+        direction = "right";
         speed= 5;
         maxLife = 5;
         life = maxLife;

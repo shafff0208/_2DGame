@@ -38,9 +38,9 @@ public class Player extends Entity{
 
     public void setDefaultValues(){
 
-        //Player position
-        worldX= gp.tileSize * 26;
-        worldY= gp.tileSize * 27;
+//        //Player position
+//        worldX= gp.tileSize * 26;
+//        worldY= gp.tileSize * 27;
 
         //Player Status
         speed = 4;
@@ -59,6 +59,26 @@ public class Player extends Entity{
         left2 = setup("/player/Player_Left2");
         right1 = setup("/player/Player_Right1");
         right2 = setup("/player/Player_Right2");
+
+    }
+
+    public void setupPlayerPos(){
+        if(gp.currentStage == gp.firstStage){
+
+            worldX= gp.tileSize * 8;
+            worldY= gp.tileSize * 16;
+
+        }else if (gp.currentStage == gp.secondStage){
+
+            worldX= gp.tileSize * 40;
+            worldY= gp.tileSize * 12;
+
+        }else if (gp.currentStage == gp.thirdStage){
+            worldX= gp.tileSize * 26;
+            worldY= gp.tileSize * 27;
+        }
+//        //DEBUG
+//        System.out.println(STR."X: \{worldX} Y: \{worldY}");
 
     }
 
@@ -126,6 +146,7 @@ public class Player extends Entity{
             String objectName = gp.obj[i].name;
             switch (objectName){
                 case "Normal Gun":
+                    gp.playSE(4);
                     hasGun++;
                     gp.obj[i] = null;
                     gp.ui.showMessage("+1 Normal Gun");
@@ -133,12 +154,14 @@ public class Player extends Entity{
                     break;
 
                 case "XCALIBA" :
+                    gp.playSE(4);
                     hasSword++;
                     gp.obj[i] = null;
                     gp.ui.showMessage("+1 XCALIBA");
                     break;
 
                 case "Life":
+                    gp.playSE(3);
                     life++;
                     gp.obj[i] = null;
                     gp.ui.showMessage("+1 life");
@@ -151,6 +174,7 @@ public class Player extends Entity{
 
     public void interactMON(int i){
         if(i != 999){
+            gp.playSE(7);
             System.out.println("Collision!");
         }
     }
