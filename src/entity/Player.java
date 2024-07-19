@@ -15,6 +15,8 @@ public class Player extends Entity{
     int hasGun = 0;
     int hasSword = 0;
 
+    public boolean newCollision = true;
+
     public Player (GamePanel gp, KeyHandler keyH){
 
         super(gp);
@@ -176,6 +178,11 @@ public class Player extends Entity{
         if(i != 999){
             gp.playSE(7);
             System.out.println("Collision!");
+            // if player enter new collision, reduce HP
+            if (newCollision) {
+                life--;
+                newCollision = false;
+            }
         }
     }
 
