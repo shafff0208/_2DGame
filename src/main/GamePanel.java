@@ -105,7 +105,7 @@ public class GamePanel extends JPanel implements Runnable {
             // when player have a new collide, enter 1 second CD of invincible
             if (!player.newCollision) {
                 collideCD += (d / 1e9);
-                System.out.println("CollideCD: " + collideCD);
+//                System.out.println("CollideCD: " + collideCD);
             }
             
             if (collideCD >= 1) {
