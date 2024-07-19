@@ -36,7 +36,6 @@ public class Stage {
                 gp.player.setupPlayerPos();
                 gp.tileM.setupMap();
                 gp.ui.stageOn = true;
-
             }
             else if (currentStage == firstStage && stageSeconds >= 20) {
                 gp.gameState = gp.continueState;

@@ -141,6 +141,10 @@ public class Player extends Entity{
             }
         }
 
+        // player dies when dies
+        if (life == 0) {
+            gp.gameState = gp.endState;
+        }
     }
 
     public void pickUpObj(int i){
