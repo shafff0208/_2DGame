@@ -15,6 +15,8 @@ public class Player extends Entity{
     int hasGun = 0;
     int hasSword = 0;
 
+    public boolean newCollision = true;
+
     public Player (GamePanel gp, KeyHandler keyH){
 
         super(gp);
@@ -62,7 +64,7 @@ public class Player extends Entity{
 
     }
 
-    public void setupPlayerPos(){
+    public void setupPlayer(){
         if(gp.stage.currentStage == gp.stage.firstStage){
 
             worldX= gp.tileSize * 8;
@@ -77,6 +79,10 @@ public class Player extends Entity{
             worldX= gp.tileSize * 26;
             worldY= gp.tileSize * 27;
         }
+
+        //RESET PLAYER LIFE EVERY NEW STAGE
+        gp.player.life = 5;
+
 //        //DEBUG
 //        System.out.println(STR."X: \{worldX} Y: \{worldY}");
 
@@ -139,6 +145,11 @@ public class Player extends Entity{
             }
         }
 
+        // player dies when dies
+//        if (life == 0) {
+//            gp.gameState = gp.endState;
+//            gp.stage.currentStage = gp.stage.firstStage;
+//        }
     }
 
     public void pickUpObj(int i){
@@ -176,6 +187,11 @@ public class Player extends Entity{
         if(i != 999){
             gp.playSE(7);
             System.out.println("Collision!");
+            // if player enter new collision, reduce HP
+            if (newCollision) {
+                life--;
+                newCollision = false;
+            }
         }
     }
 

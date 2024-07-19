@@ -33,15 +33,14 @@ public class Stage {
 
             //Change stageSeconds to stageMinutes for stage progression
             if (currentStage == firstStage && stageSeconds ==0){
-                gp.player.setupPlayerPos();
+                gp.player.setupPlayer();
                 gp.tileM.setupMap();
                 gp.ui.stageOn = true;
-
             }
             else if (currentStage == firstStage && stageSeconds >= 20) {
                 gp.gameState = gp.continueState;
                 currentStage++;
-                gp.player.setupPlayerPos();
+                gp.player.setupPlayer();
                 gp.tileM.setupMap();
                 gp.ui.stageOn = true;
                 stageStartTime = System.currentTimeMillis();
@@ -49,22 +48,28 @@ public class Stage {
             } else if (currentStage == secondStage && stageSeconds >= 20) {
                 gp.gameState = gp.continueState;
                 currentStage++;
-                gp.player.setupPlayerPos();
+                gp.player.setupPlayer();
                 gp.tileM.setupMap();
                 gp.ui.stageOn = true;
                 stageStartTime = System.currentTimeMillis();
 
-            } else if (currentStage == thirdStage && stageSeconds >= 20) {
-                currentStage = firstStage;
-                gp.tileM.setupMap();
-                gp.gameState = gp.endState;
-                gp.player.worldX= gp.tileSize * 26;
-                gp.player.worldY= gp.tileSize * 27;
+            } else if (currentStage == thirdStage && stageSeconds >= 20 || gp.player.life == 0) {
+                resetStage();
             }
 //        //DEBUG
 //         System.out.println("Stage: " + currentStage);
 
         }
+    }
+
+    //RESET STAGE if player dies or player reach STAGE 3
+    public void resetStage(){
+
+        gp.gameState = gp.endState;
+        currentStage = firstStage;
+        gp.player.setupPlayer();
+        gp.tileM.setupMap();
+
     }
 
     public void checkStageTimer() {
