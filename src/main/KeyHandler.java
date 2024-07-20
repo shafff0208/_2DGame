@@ -147,14 +147,14 @@ public class KeyHandler implements KeyListener {
             if (code == KeyEvent.VK_A) {
                 gp.ui.stageNum--;
                 if (gp.ui.stageNum < 0) {
-                    gp.ui.stageNum = 2;
+                    gp.ui.stageNum = 1;
                 }
             }
 
             //Increase stageNum by 1 for selection
             if (code == KeyEvent.VK_D) {
                 gp.ui.stageNum++;
-                if (gp.ui.stageNum > 2) {
+                if (gp.ui.stageNum > 1) {
                     gp.ui.stageNum = 0;
                 }
             }
