@@ -20,12 +20,14 @@ public class UI {
     public boolean messageOn = false;
     public boolean stageOn = true;
     public String message = "";
+    public String currentDialogue = "";
     public int messageCounter = 0;
     public int stageOnCounter = 0;
     public int commandNum = 0;
     public int pauseNum = 0;
     public int stageNum = 0;
     public int endNum = 0;
+    public int scientistNum = 0;
 
 
     public UI(GamePanel gp) {
@@ -93,6 +95,11 @@ public class UI {
             drawGameOverScreen();
         }
 
+        //Dialogue
+        if(gp.gameState == gp.dialogueState){
+            drawScientistINT();
+        }
+
     }
 
     public void drawPlayerLife() {
@@ -156,6 +163,70 @@ public class UI {
         }
 
     }
+
+    public void drawScientistINT(){
+
+        int x = gp.tileSize * 2;
+        int y = gp.tileSize*7;
+        int width = gp.screenWidth - (gp.tileSize * 4);
+        int height = gp.tileSize * 4;
+        drawDialogueWindow(x, y, width, height);
+
+        x += (int) (gp.tileSize * 10.5);
+        y += gp.tileSize * 2;
+        g2.drawImage(gp.scientist.left1, x, y, gp.tileSize*3, gp.tileSize*3, null );
+
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD,30F));
+
+        x = (int) (gp.tileSize * 2.5);
+        y = gp.tileSize * 8;
+
+        for(String line : currentDialogue.split("\n")){
+            g2.drawString(line, x, y);
+            y+= 40;
+        }
+
+        String text = "Yes";
+        x = gp.tileSize*4;
+        y = (int) (gp.tileSize*10.5);
+        g2.drawString(text, x, y );
+        if (scientistNum == 0){
+            g2.drawString(">", x-gp.tileSize, y);
+        }
+
+        text = "No";
+        x = getXCenteredText(text);
+        y = (int) (gp.tileSize*10.5);
+        g2.drawString(text, x, y );
+        if (scientistNum == 1){
+            g2.drawString(">", x-gp.tileSize, y);
+        }
+
+        text = "Kill Him";
+        x = (int) (gp.tileSize*10.5);
+        y = (int) (gp.tileSize*10.5);
+        g2.drawString(text, x, y );
+        if (scientistNum == 2){
+            g2.drawString(">", x-gp.tileSize, y);
+        }
+
+
+    }
+
+    public void drawDialogueWindow(int x, int y, int width, int height){
+
+        Color c = new Color(0,0,0,210);
+        g2.setColor(c);
+        g2.fillRoundRect(x, y, width, height, 35,35);
+
+        c = new Color(255,255,255);
+        g2.setColor(c);
+        g2.setStroke(new BasicStroke(5));
+        g2.drawRoundRect(x+5, y+5, width -10, height -10, 25,25);
+
+
+    }
+
 
     public void drawPauseScreen(){
 

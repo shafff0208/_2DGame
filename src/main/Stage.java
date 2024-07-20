@@ -32,13 +32,17 @@ public class Stage {
         if(gp.gameState == gp.playState){
 
             //Change stageSeconds to stageMinutes for stage progression
-            if (currentStage == firstStage && stageSeconds ==0){
+            if (currentStage == firstStage && stageSeconds == 0){
+                gp.gameState = gp.dialogueState;
+                gp.scientist.speak();
                 gp.player.setupPlayer();
                 gp.tileM.setupMap();
                 gp.ui.stageOn = true;
+
             }
             else if (currentStage == firstStage && stageSeconds >= 20) {
                 gp.gameState = gp.continueState;
+                gp.scientist.speak();
                 currentStage++;
                 gp.player.setupPlayer();
                 gp.tileM.setupMap();
@@ -47,6 +51,7 @@ public class Stage {
 
             } else if (currentStage == secondStage && stageSeconds >= 20) {
                 gp.gameState = gp.continueState;
+                gp.scientist.speak();
                 currentStage++;
                 gp.player.setupPlayer();
                 gp.tileM.setupMap();
@@ -67,6 +72,9 @@ public class Stage {
 
         gp.gameState = gp.endState;
         currentStage = firstStage;
+        gp.scientist.desperateCounter = 0;
+        gp.scientist.dialogueIndex = 0;
+        gp.scientist.resetBuff();
         gp.player.setupPlayer();
         gp.tileM.setupMap();
 
