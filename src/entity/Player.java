@@ -12,7 +12,8 @@ public class Player extends Entity{
     KeyHandler keyH;
     public final int screenX;
     public final int screenY;
-    int hasGun = 0;
+    private boolean hasGun = false;
+    private int currentWeapon = 0;
     int hasSword = 0;
 
     public boolean newCollision = true;
@@ -48,17 +49,30 @@ public class Player extends Entity{
     }
 
     public void getPlayerImage(){
-
-        up1 = setup("/player/Player_Up1");
-        up2 = setup("/player/Player_Up2");
-        down1 = setup("/player/Player_Down1");
-        down2 = setup("/player/Player_Down2");
-        left1 = setup("/player/Player_Left1");
-        left2 = setup("/player/Player_Left2");
-        right1 = setup("/player/Player_Right1");
-        right2 = setup("/player/Player_Right2");
-
+        if (currentWeapon == 1) {
+            //Sprites player with blue gun
+            up1 = setup("/player/PlayerBlueGun_Up");
+            up2 = setup("/player/PlayerBlueGun_Up");
+            down1 = setup("/player/PlayerBlueGun_Down");
+            down2 = setup("/player/PlayerBlueGun_Down");
+            left1 = setup("/player/PlayerBlueGun_Left");
+            left2 = setup("/player/PlayerBlueGun_Left");
+            right1 = setup("/player/PlayerBlueGun_Right");
+            right2 = setup("/player/PlayerBlueGun_Right");
+        }else{
+            //Default player sprites
+            up1 = setup("/player/Player_Up1");
+            up2 = setup("/player/Player_Up2");
+            down1 = setup("/player/Player_Down1");
+            down2 = setup("/player/Player_Down2");
+            left1 = setup("/player/Player_Left1");
+            left2 = setup("/player/Player_Left2");
+            right1 = setup("/player/Player_Right1");
+            right2 = setup("/player/Player_Right2");
+        }
     }
+
+
 
     public void setupPlayer(){
         if(gp.stage.currentStage == gp.stage.firstStage){
@@ -83,6 +97,14 @@ public class Player extends Entity{
 //        System.out.println(STR."X: \{worldX} Y: \{worldY}");
 
     }
+    public void weaponButtonPress(int button){
+        if (button == 1 && hasGun){
+            currentWeapon = 1; // Equip blue gun
+        }else{
+            currentWeapon = 0; // Unequip weapon
+        }
+        getPlayerImage();
+    }
 
     public void update(){
 
@@ -102,6 +124,7 @@ public class Player extends Entity{
                 direction = "right";
 
             }
+
 
             //Check Tile Collision
             collisionOn = false;
@@ -148,9 +171,11 @@ public class Player extends Entity{
             switch (objectName){
                 case "Normal Gun":
                     gp.playSE(4);
-                    hasGun++;
+                    hasGun = true;
+                    currentWeapon = 1;
                     gp.obj[i] = null;
                     gp.ui.showMessage("+1 Normal Gun");
+                    getPlayerImage();
 
                     break;
 
@@ -230,4 +255,12 @@ public class Player extends Entity{
         return new Rectangle(gp.player.worldX, gp.player.worldY, gp.tileSize, gp.tileSize);
     }
 
+    public boolean isHasGun(){
+        return hasGun;
+    }
+
+    public void setCurrentWeapon(int weapon){
+        currentWeapon = weapon;
+        getPlayerImage();
+    }
 }

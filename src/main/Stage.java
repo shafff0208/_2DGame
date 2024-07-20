@@ -40,7 +40,7 @@ public class Stage {
                 gp.ui.stageOn = true;
 
             }
-            else if (currentStage == firstStage && stageSeconds >= 20) {
+            else if (currentStage == firstStage && stageSeconds >= 2000) {
                 gp.gameState = gp.continueState;
                 gp.scientist.speak();
                 currentStage++;
@@ -49,7 +49,7 @@ public class Stage {
                 gp.ui.stageOn = true;
                 stageStartTime = System.currentTimeMillis();
 
-            } else if (currentStage == secondStage && stageSeconds >= 20) {
+            } else if (currentStage == secondStage && stageSeconds >= 2000) {
                 gp.gameState = gp.continueState;
                 gp.scientist.speak();
                 currentStage++;
