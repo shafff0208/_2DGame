@@ -40,10 +40,6 @@ public class Player extends Entity{
 
     public void setDefaultValues(){
 
-//        //Player position
-//        worldX= gp.tileSize * 26;
-//        worldY= gp.tileSize * 27;
-
         //Player Status
         speed = 4;
         direction = "right";
@@ -81,7 +77,7 @@ public class Player extends Entity{
         }
 
         //RESET PLAYER LIFE EVERY NEW STAGE
-        gp.player.life = 5;
+        gp.player.life = maxLife;
 
 //        //DEBUG
 //        System.out.println(STR."X: \{worldX} Y: \{worldY}");
@@ -144,12 +140,6 @@ public class Player extends Entity{
                 spriteCounter = 0;
             }
         }
-
-        // player dies when dies
-//        if (life == 0) {
-//            gp.gameState = gp.endState;
-//            gp.stage.currentStage = gp.stage.firstStage;
-//        }
     }
 
     public void pickUpObj(int i){

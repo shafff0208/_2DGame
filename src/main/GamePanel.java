@@ -2,6 +2,7 @@ package main;
 
 import entity.Entity;
 import entity.Player;
+import entity.Scientist;
 import object.SuperObject;
 import tiles.TileManager;
 
@@ -37,6 +38,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     // Entity, Object
     public Player player = new Player(this, keyH);
+    public Scientist scientist = new Scientist(this);
     public Entity[] monster = new Entity[50];
     public SuperObject[] obj = new SuperObject[50];
 
@@ -45,8 +47,9 @@ public class GamePanel extends JPanel implements Runnable {
     public final int titleState = 0;
     public final int playState = 1;
     public final int pauseState = 2;
-    public final int continueState = 3; // Can change to scientist interaction State
+    public final int continueState = 3;
     public final int endState = 4; // Can display different endings (need add more states)
+    public final int dialogueState = 5;
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
@@ -145,9 +148,9 @@ public class GamePanel extends JPanel implements Runnable {
         // Title Screen
         if (gameState == titleState) {
             ui.draw(g2);
-        } else if (gameState == continueState) {
+        } else if (gameState == continueState) { //Continue Screen
             ui.draw(g2);
-        } else if (gameState == endState) {
+        } else if (gameState == endState) { //END Screen
             ui.draw(g2);
         } else {
 

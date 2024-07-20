@@ -37,9 +37,8 @@ public class Entity {
 
     }
 
-    public void setAction(){
-
-    }
+    public void setAction(){}
+    public void speak(){}
 
     public void update(){
 

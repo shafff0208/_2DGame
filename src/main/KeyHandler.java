@@ -43,20 +43,25 @@ public class KeyHandler implements KeyListener {
             }
 
             if (code == KeyEvent.VK_SPACE) {
-                if (gp.ui.commandNum == 0) {
+                if (gp.ui.commandNum == 0) { //NEW GAME
 
+                    gp.stage.resetStage();
                     gp.gameState = gp.playState;
                     gp.stage.checkStageTimer();
                     gp.playSE(2);
 
 
                 }
-                if (gp.ui.commandNum == 1) {
+                if (gp.ui.commandNum == 1) { //LOAD GAME
 
                     //Save & Load Function
+                    gp.gameState = gp.playState;
+                    gp.stage.checkStageTimer();
+                    gp.playSE(2);
+
 
                 }
-                if (gp.ui.commandNum == 2) {
+                if (gp.ui.commandNum == 2) { //EXIT
 
                     System.exit(0);
 
@@ -91,8 +96,6 @@ public class KeyHandler implements KeyListener {
         //Pause State
         else if (gp.gameState == gp.pauseState) {
 
-
-
             if (code == KeyEvent.VK_E) {
                 gp.gameState = gp.playState;
                 gp.playMusic(1);
@@ -115,19 +118,19 @@ public class KeyHandler implements KeyListener {
             }
 
             if (code == KeyEvent.VK_SPACE) {
-                if (gp.ui.pauseNum == 0) {
+                if (gp.ui.pauseNum == 0) { //BACK
 
                     gp.gameState = gp.playState;
                     gp.playSE(2);
 
                 }
-                if (gp.ui.pauseNum == 1) {
+                if (gp.ui.pauseNum == 1) { //SAVE
 
                     //Save Function
                     gp.playSE(2);
 
                 }
-                if (gp.ui.pauseNum == 2) {
+                if (gp.ui.pauseNum == 2) { //BACK TO TITLE
                     gp.playSE(2);
                     gp.gameState = gp.titleState;
 
@@ -137,28 +140,32 @@ public class KeyHandler implements KeyListener {
 
         }
 
-        //Continue State (Scientist Interaction)
+        //Continue State
         else if (gp.gameState == gp.continueState) {
 
             //Decrease stageNum by 1 for selection
             if (code == KeyEvent.VK_A) {
                 gp.ui.stageNum--;
                 if (gp.ui.stageNum < 0) {
-                    gp.ui.stageNum = 1;
+                    gp.ui.stageNum = 2;
                 }
             }
 
             //Increase stageNum by 1 for selection
             if (code == KeyEvent.VK_D) {
                 gp.ui.stageNum++;
-                if (gp.ui.stageNum > 1) {
+                if (gp.ui.stageNum > 2) {
                     gp.ui.stageNum = 0;
                 }
             }
             if (code == KeyEvent.VK_SPACE) {
                 if (gp.ui.stageNum == 0) {
                     gp.stage.checkStage();
-                    gp.gameState = gp.playState;
+                    if(gp.scientist.scientistON == true){
+                        gp.gameState = gp.dialogueState;
+                    }else{
+                        gp.gameState = gp.playState;
+                    }
                     gp.playSE(2);
 
                     //DEBUG
@@ -171,6 +178,54 @@ public class KeyHandler implements KeyListener {
                 }
 
             }
+        }
+
+        //Scientist Interaction
+        else if (gp.gameState == gp.dialogueState){
+
+            //Decrease scientistNum by 1 for selection
+            if (code == KeyEvent.VK_A) {
+                gp.ui.scientistNum--;
+                if (gp.ui.scientistNum < 0) {
+                    gp.ui.scientistNum = 2;
+                }
+            }
+
+            //Increase scientistNum by 1 for selection
+            if (code == KeyEvent.VK_D) {
+                gp.ui.scientistNum++;
+                if (gp.ui.scientistNum > 2) {
+                    gp.ui.scientistNum = 0;
+                }
+            }
+            if (code == KeyEvent.VK_SPACE) {
+                if (gp.ui.scientistNum == 0) { //YES
+
+                    //ADD BUFF
+                    gp.scientist.buffPlayer();
+                    gp.gameState = gp.playState;
+                    gp.playSE(2);
+
+                }
+                if (gp.ui.scientistNum == 1) { //NO
+
+                    //IGNORE
+                    gp.playSE(2);
+                    gp.scientist.desperateCounter++;
+                    gp.scientist.resetBuff();
+                    gp.gameState = gp.playState;
+
+                    //DEBUG
+                    System.out.println("Desperate counter: " + gp.scientist.desperateCounter);
+                }
+
+                if (gp.ui.scientistNum == 2){ //KILL
+                    gp.scientist.scientistON = false;
+                    gp.gameState = gp.playState;
+                }
+
+            }
+
         }
 
         //Ending
