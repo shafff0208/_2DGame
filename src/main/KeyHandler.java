@@ -221,6 +221,7 @@ public class KeyHandler implements KeyListener {
 
                 if (gp.ui.scientistNum == 2){ //KILL
                     gp.scientist.scientistON = false;
+                    gp.scientist.resetBuff();
                     gp.gameState = gp.playState;
                 }
 
