@@ -1,5 +1,8 @@
 package main;
 
+import java.util.ArrayList;
+import java.util.Random;
+
 import entity.*;
 import object.*;
 
@@ -136,70 +139,132 @@ public class AssetSetter {
         }
     }
 
+    public ArrayList<Integer> getRandomPos() {
+        ArrayList<ArrayList<Integer>> availableTiles = gp.tileM.availableTiles;
+        int nTiles = availableTiles.size() - 1;
+
+        System.out.println("nTiles: " + nTiles);
+
+        Random rand = new Random();
+        int tileIdx = rand.nextInt(nTiles);
+
+        return availableTiles.get(tileIdx);
+    }
+
+    // public void setMON() {
+    //     gp.monster[0] = new MON_Bear(gp);
+    //     gp.monster[0].worldX = 13 * gp.tileSize;
+    //     gp.monster[0].worldY = 15 * gp.tileSize;
+
+    //     gp.monster[1] = new MON_Bear(gp);
+    //     gp.monster[1].worldX = 18 * gp.tileSize;
+    //     gp.monster[1].worldY = 16 * gp.tileSize;
+
+    //     gp.monster[2] = new MON_Bear(gp);
+    //     gp.monster[2].worldX = 17 * gp.tileSize;
+    //     gp.monster[2].worldY = 16 * gp.tileSize;
+
+    //     gp.monster[3] = new MON_Bear(gp);
+    //     gp.monster[3].worldX = 16 * gp.tileSize;
+    //     gp.monster[3].worldY = 15 * gp.tileSize;
+
+    //     gp.monster[4] = new MON_Worm(gp);
+    //     gp.monster[4].worldX = 15 * gp.tileSize;
+    //     gp.monster[4].worldY = 13 * gp.tileSize;
+
+    //     gp.monster[5] = new MON_Worm(gp);
+    //     gp.monster[5].worldX = 16 * gp.tileSize;
+    //     gp.monster[5].worldY = 18 * gp.tileSize;
+
+    //     gp.monster[6] = new MON_Worm(gp);
+    //     gp.monster[6].worldX = 16 * gp.tileSize;
+    //     gp.monster[6].worldY = 17 * gp.tileSize;
+
+    //     gp.monster[7] = new MON_Worm(gp);
+    //     gp.monster[7].worldX = 17 * gp.tileSize;
+    //     gp.monster[7].worldY = 17 * gp.tileSize;
+
+    //     gp.monster[8] = new MON_MutantTreant(gp);
+    //     gp.monster[8].worldX = 15 * gp.tileSize;
+    //     gp.monster[8].worldY = 18 * gp.tileSize;
+
+    //     gp.monster[9] = new MON_MutantTreant(gp);
+    //     gp.monster[9].worldX = 12 * gp.tileSize;
+    //     gp.monster[9].worldY = 17 * gp.tileSize;
+
+    //     gp.monster[10] = new MON_MutantTreant(gp);
+    //     gp.monster[10].worldX = 18 * gp.tileSize;
+    //     gp.monster[10].worldY = 15 * gp.tileSize;
+
+    //     gp.monster[11] = new MON_MutantTreant(gp);
+    //     gp.monster[11].worldX = 19 * gp.tileSize;
+    //     gp.monster[11].worldY = 16 * gp.tileSize;
+
+    //     gp.monster[12] = new MON_Pred(gp);
+    //     gp.monster[12].worldX = 15 * gp.tileSize;
+    //     gp.monster[12].worldY = 16 * gp.tileSize;
+
+    //     gp.monster[13] = new MON_Pred(gp);
+    //     gp.monster[13].worldX = 16 * gp.tileSize;
+    //     gp.monster[13].worldY = 17 * gp.tileSize;
+
+    //     gp.monster[14] = new MON_Pred(gp);
+    //     gp.monster[14].worldX = 13 * gp.tileSize;
+    //     gp.monster[14].worldY = 18 * gp.tileSize;
+
+    //     gp.monster[15] = new MON_Pred(gp);
+    //     gp.monster[15].worldX = 16 * gp.tileSize;
+    //     gp.monster[15].worldY = 13 * gp.tileSize;
+    // }
+
+
+    public void setEntityPos(Entity entity, ArrayList<Integer> position, int tileSize) {
+        entity.worldX = position.get(0) * tileSize;
+        entity.worldY = position.get(1) * tileSize;
+    }
+
+    public Entity getMonster(int stageIdx, boolean isBoss) {
+        Entity monster;
+        switch (stageIdx) {
+            case 1:
+                if (isBoss) {
+                    monster = new MON_Bear(gp);
+                } else
+                    monster = new MON_Worm(gp);
+                break;
+            case 2:
+                if (isBoss) {
+                    monster = new MON_Bear(gp);
+                } else
+                    monster = new MON_Rat(gp);
+                break;
+            case 3:
+                if (isBoss) {
+                    monster = new MON_MutantTreant(gp);
+                } else
+                    monster = new MON_Pred(gp);
+                break;
+            default:
+                monster = new MON_Worm(gp);
+                break;
+        }
+        return monster;
+    }
+
     public void setMON() {
-        gp.monster[0] = new MON_Bear(gp);
-        gp.monster[0].worldX = 13 * gp.tileSize;
-        gp.monster[0].worldY = 15 * gp.tileSize;
-
-        gp.monster[1] = new MON_Bear(gp);
-        gp.monster[1].worldX = 18 * gp.tileSize;
-        gp.monster[1].worldY = 16 * gp.tileSize;
-
-        gp.monster[2] = new MON_Bear(gp);
-        gp.monster[2].worldX = 17 * gp.tileSize;
-        gp.monster[2].worldY = 16 * gp.tileSize;
-
-        gp.monster[3] = new MON_Bear(gp);
-        gp.monster[3].worldX = 16 * gp.tileSize;
-        gp.monster[3].worldY = 15 * gp.tileSize;
-
-        gp.monster[4] = new MON_Worm(gp);
-        gp.monster[4].worldX = 15 * gp.tileSize;
-        gp.monster[4].worldY = 13 * gp.tileSize;
-
-        gp.monster[5] = new MON_Worm(gp);
-        gp.monster[5].worldX = 16 * gp.tileSize;
-        gp.monster[5].worldY = 18 * gp.tileSize;
-
-        gp.monster[6] = new MON_Worm(gp);
-        gp.monster[6].worldX = 16 * gp.tileSize;
-        gp.monster[6].worldY = 17 * gp.tileSize;
-
-        gp.monster[7] = new MON_Worm(gp);
-        gp.monster[7].worldX = 17 * gp.tileSize;
-        gp.monster[7].worldY = 17 * gp.tileSize;
-
-        gp.monster[8] = new MON_MutantTreant(gp);
-        gp.monster[8].worldX = 15 * gp.tileSize;
-        gp.monster[8].worldY = 18 * gp.tileSize;
-
-        gp.monster[9] = new MON_MutantTreant(gp);
-        gp.monster[9].worldX = 12 * gp.tileSize;
-        gp.monster[9].worldY = 17 * gp.tileSize;
-
-        gp.monster[10] = new MON_MutantTreant(gp);
-        gp.monster[10].worldX = 18 * gp.tileSize;
-        gp.monster[10].worldY = 15 * gp.tileSize;
-
-        gp.monster[11] = new MON_MutantTreant(gp);
-        gp.monster[11].worldX = 19 * gp.tileSize;
-        gp.monster[11].worldY = 16 * gp.tileSize;
-
-        gp.monster[12] = new MON_Pred(gp);
-        gp.monster[12].worldX = 15 * gp.tileSize;
-        gp.monster[12].worldY = 16 * gp.tileSize;
-
-        gp.monster[13] = new MON_Pred(gp);
-        gp.monster[13].worldX = 16 * gp.tileSize;
-        gp.monster[13].worldY = 17 * gp.tileSize;
-
-        gp.monster[14] = new MON_Pred(gp);
-        gp.monster[14].worldX = 13 * gp.tileSize;
-        gp.monster[14].worldY = 18 * gp.tileSize;
-
-        gp.monster[15] = new MON_Pred(gp);
-        gp.monster[15].worldX = 16 * gp.tileSize;
-        gp.monster[15].worldY = 13 * gp.tileSize;
+        if (gp.monsterInitialized) {
+            return;
+        }
+        int stageIdx = gp.stage.currentStage;
+        int nMonster = 50;
+        System.out.println("Current stage: " + stageIdx);
+        for (int i = 0; i < nMonster; i++) {
+            Entity monster = getMonster(stageIdx, false);
+            setEntityPos(monster, getRandomPos(), gp.tileSize);
+            gp.monster[i] = monster;
+        }
+        gp.monster[nMonster] = getMonster(stageIdx, true);
+        gp.monsterInitialized = true;
     }
 
-    }
+}

@@ -52,6 +52,8 @@ public class GamePanel extends JPanel implements Runnable {
     public final int endState = 4;
     public final int dialogueState = 5;
 
+    public boolean monsterInitialized = false;
+
     public GamePanel() {
 
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
@@ -67,7 +69,7 @@ public class GamePanel extends JPanel implements Runnable {
         gameState = titleState;
         stage.currentStage = stage.firstStage;
         aSetter.setObject();
-        aSetter.setMON();
+        // aSetter.setMON();
     }
 
     public void playMusic(int i) {
