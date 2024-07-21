@@ -11,7 +11,7 @@ public class OBJ_Projectile_Blue extends Projectiles {
         this.gp = gp;
 
         name = "Projectile Blue";
-        speed = 5;
+        speed = 10;
         maxLife = 80;
         life = maxLife;
         attack = 1;
@@ -24,9 +24,9 @@ public class OBJ_Projectile_Blue extends Projectiles {
         up2 = setup("/projectiles/projectiles_up");
         down1 = setup("/projectiles/projectiles_down");
         down2 = setup("/projectiles/projectiles_down");
-        left1 = setup("/projectiles/projectile_left");
+        left1 = setup("/projectiles/projectiles_left");
         left2 = setup("/projectiles/projectiles_left");
-        right1 = setup("/projectiles/projectile_right");
+        right1 = setup("/projectiles/projectiles_right");
         right2 = setup("/projectiles/projectiles_right");
 
     }
