@@ -9,18 +9,21 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 
 public class TileManager {
 
     GamePanel gp;
     public Tile[] tile;
     public int[][] mapTileNum;
+    public ArrayList<ArrayList<Integer>> availableTiles;
 
 
     public TileManager (GamePanel gp){
 
         this.gp = gp;
         tile = new Tile [10];
+        availableTiles = new ArrayList<>(); 
         getTileImage();
         mapTileNum = new int[gp.maxWorldCol][gp.maxWorldRow];
 
@@ -50,6 +53,8 @@ public class TileManager {
             int col = 0;
             int row = 0;
 
+            availableTiles = new ArrayList<>(); 
+
             while (col < gp.maxWorldCol && row < gp.maxWorldRow){
 
                 String line = br.readLine();
@@ -61,6 +66,21 @@ public class TileManager {
                     int num = Integer.parseInt(numbers[col]);
 
                     mapTileNum[col][row] = num;
+
+                    // if num == 0 -> available tile to spawn
+                    if (num == 0 || num == 2) {
+                        // int curTiles = availableTiles.length;
+                        // availableTiles[curTiles][0] = col;
+                        // availableTiles[curTiles][1] = row;
+                        ArrayList<Integer> posTile = new ArrayList<>();
+                        posTile.add(col);
+                        posTile.add(row);
+
+                        // System.out.printf("(%d, %d)%n", col, row);
+
+                        availableTiles.add(posTile);
+                    }
+
                     col++;
 
                 }
@@ -73,7 +93,11 @@ public class TileManager {
                 }
 
             }
+            System.out.println("nTiles: " + availableTiles.size());
+            
             br.close();
+
+            gp.aSetter.setMON();
 
         }catch(Exception e){
 
