@@ -14,6 +14,9 @@ public class Player extends Entity{
     public final int screenY;
     int hasGun = 0;
     int hasSword = 0;
+    int hasCore1 = 0;
+    int hasCore2 = 0;
+    int hasCore3 = 0;
 
     public boolean newCollision = true;
 
@@ -48,7 +51,6 @@ public class Player extends Entity{
     }
 
     public void getPlayerImage(){
-
         up1 = setup("/player/Player_Up1");
         up2 = setup("/player/Player_Up2");
         down1 = setup("/player/Player_Down1");
@@ -57,7 +59,6 @@ public class Player extends Entity{
         left2 = setup("/player/Player_Left2");
         right1 = setup("/player/Player_Right1");
         right2 = setup("/player/Player_Right2");
-
     }
 
     public void setupPlayer(){
@@ -117,6 +118,7 @@ public class Player extends Entity{
 
 
             if(collisionOn == false){
+
                 switch (direction){
                     case "up": worldY -= speed;
                         break;
@@ -166,12 +168,64 @@ public class Player extends Entity{
                     life++;
                     gp.obj[i] = null;
                     gp.ui.showMessage("+1 life");
+                    break;
+
+                case "Core 1":
+                    gp.playSE(3);
+                    hasCore1++;
+                    gp.obj[i] = null;
+                    gp.ui.showMessage("Core (Base) Found! Proceed to Base");
+                    System.out.println(hasCore1);
+                    break;
+
+                case "Core 2":
+                    gp.playSE(3);
+                    hasCore2++;
+                    gp.obj[i] = null;
+                    gp.ui.showMessage("Core (Heart) Found! Proceed to Base");
+                    break;
+
+                case "Core 3":
+                    gp.playSE(3);
+                    hasCore3++;
+                    gp.obj[i] = null;
+                    gp.ui.showMessage("Core (Activator) Found! Proceed to Base");
+                    break;
+
+                case "BASE Inner", "BASE Outer":
+                    if(gp.stage.currentStage == gp.stage.firstStage){
+                        if(hasCore1 == 1){
+                            gp.stage.setupStageProgress();
+                        }else if(hasCore1 == 0){
+                            gp.ui.showMessage("Find Core!");
+                        }
+                    }else if(gp.stage.currentStage == gp.stage.secondStage){
+                        if(hasCore2 == 1){
+                            gp.stage.setupStageProgress();
+                        }else if(hasCore2 == 0){
+                            gp.ui.showMessage("Find Core!");
+                        }
+                    }else if(gp.stage.currentStage == gp.stage.thirdStage){
+                        if(hasCore3 == 1){
+                            gp.gameState = gp.endState;
+                        }else if(hasCore2 == 0){
+                            gp.ui.showMessage("Find Core!");
+                        }
+                    }
 
                     break;
 
             }
         }
     }
+
+//    public void baseLogic(){
+//        if(hasCore1 == 1 || hasCore2 == 1 || hasCore3 == 1 ){
+//            gp.stage.stageMinutes = 1;
+//        }else if(hasCore1 == 0 || hasCore2 == 0 || hasCore3 == 0 ){
+//            gp.ui.showMessage("Find Core!");
+//        }
+//    }
 
     public void interactMON(int i){
         if(i != 999){
@@ -186,7 +240,6 @@ public class Player extends Entity{
     }
 
     public void draw(Graphics2D g2){
-
         BufferedImage image = null;
         switch (direction){
             case "up":
@@ -223,7 +276,6 @@ public class Player extends Entity{
                 break;
         }
         g2.drawImage(image, screenX, screenY, null);
-
     }
 
     public Rectangle getBounds() {

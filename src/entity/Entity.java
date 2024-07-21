@@ -91,9 +91,7 @@ public class Entity {
 
 
     public void draw(Graphics2D g2){
-
         BufferedImage image = null;
-
         int screenX = worldX - gp.player.worldX + gp.player.screenX;
         int screenY = worldY - gp.player.worldY + gp.player.screenY;
 
@@ -101,7 +99,6 @@ public class Entity {
                 worldX - gp.tileSize < gp.player.worldX + gp.player.screenX &&
                 worldY + gp.tileSize > gp.player.worldY - gp.player.screenY &&
                 worldY - gp.tileSize < gp.player.worldY + gp.player.screenY){
-
             switch (direction){
                 case "up":
                     if (spriteNum == 1){image = up1;}
@@ -121,13 +118,10 @@ public class Entity {
                     if (spriteNum == 2){image = right2;}
                     break;
             }
-
             if (invincible == true){
                 g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.4f));
             }
-
             g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
-
             g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
         }
     }

@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Purifier's Quest (DEMO)">
+    <output-path>$PROJECT_DIR$/out/artifacts/Purifier_s_Quest__DEMO_</output-path>
+    <root id="archive" name="Purifier's Quest (DEMO).jar">
+      <element id="module-output" name="_2DGame" />
+    </root>
+  </artifact>
+</component>
