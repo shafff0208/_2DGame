@@ -8,6 +8,7 @@ import tiles.TileManager;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class GamePanel extends JPanel implements Runnable {
 
@@ -29,7 +30,7 @@ public class GamePanel extends JPanel implements Runnable {
     // System
     TileManager tileM = new TileManager(this);
     Thread gameThread;
-    KeyHandler keyH = new KeyHandler(this);
+    public KeyHandler keyH = new KeyHandler(this);
     public CollisionDetection cDetection = new CollisionDetection(this);
     public AssetSetter aSetter = new AssetSetter(this);
     public UI ui = new UI(this);
@@ -41,6 +42,8 @@ public class GamePanel extends JPanel implements Runnable {
     public Scientist scientist = new Scientist(this);
     public Entity[] monster = new Entity[50];
     public SuperObject[] obj = new SuperObject[50];
+    public ArrayList<Entity> projectileList = new ArrayList<>();
+    public ArrayList<Entity> entityList;
 
     // Game State
     public int gameState;
@@ -123,7 +126,7 @@ public class GamePanel extends JPanel implements Runnable {
             }
         }
     }
-
+            //
     public void computeCollideCD() {
 
     }
@@ -135,6 +138,16 @@ public class GamePanel extends JPanel implements Runnable {
             for (int i = 0; i < monster.length; i++) {
                 if (monster[i] != null) {
                     monster[i].update();
+                }
+            }
+            for(int i =0; i<projectileList.size(); i++){
+                if(projectileList.get(i) !=null){
+                    if(projectileList.get(i).alive == true){
+                        projectileList.get(i).update();
+                    }
+                    if(projectileList.get(i).alive == false){
+                        projectileList.remove(i);
+                    }
                 }
             }
             stage.checkStage();
@@ -171,8 +184,20 @@ public class GamePanel extends JPanel implements Runnable {
                 }
             }
 
+            //Entity List
+            for (int i = 0; i < projectileList.size(); i++){
+                if(projectileList.get(i) !=null){
+                    entityList.add(projectileList.get(i));
+                }
+            }
             // Draw Player
             player.draw(g2);
+
+            //Draw entity
+            for(int i = 0; i <entityList.size(); i++){
+                    entityList.get(i).draw(g2);
+            }
+            entityList.clear();
 
             // Draw UI
             ui.draw(g2);

@@ -2,6 +2,8 @@ package entity;
 
 import main.GamePanel;
 import main.KeyHandler;
+import object.OBJ_Projectile_Blue;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
@@ -46,6 +48,7 @@ public class Player extends Entity{
         direction = "right";
         maxLife = 5;
         life = maxLife;
+        projectile = new OBJ_Projectile_Blue(gp);
     }
 
     public void getPlayerImage(){
@@ -163,6 +166,20 @@ public class Player extends Entity{
                 spriteCounter = 0;
             }
         }
+        if(gp.keyH.shootKeyPressed == true && projectile.alive == false && shotAvailableCounter == 30){
+
+            projectile.set(worldX, worldY, direction, true);
+
+            gp.projectileList.add(projectile);
+
+            shotAvailableCounter= 0;
+
+            gp.playSE(10);
+        }
+
+        if(shotAvailableCounter < 30){
+            shotAvailableCounter++;
+        }
     }
 
     public void pickUpObj(int i){
@@ -207,6 +224,14 @@ public class Player extends Entity{
                 life--;
                 newCollision = false;
             }
+        }
+    }
+
+    public void damageMonster(int i, int attack){
+        if(i != 999){
+            System.out.println("Hit!");
+        }else{
+            System.out.println("Miss!");
         }
     }
 

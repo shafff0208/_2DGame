@@ -25,11 +25,15 @@ public class Entity {
     public Boolean collisionOn = false;
     public int maxLife;
     public int life;
+    public int attack;
     public int actionLockCounter = 0;
     public boolean invincible = false;
     public int invincibleCounter = 0;
-    public int type; 
+    public int type;
+    public Projectiles projectile;
+    public int shotAvailableCounter = 0;
     boolean attacking = false;
+    public boolean alive = true;
 
     public Entity(GamePanel gp) {
 
