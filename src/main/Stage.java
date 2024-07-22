@@ -91,6 +91,7 @@ public class Stage {
     //RESET STAGE if player dies or player reach STAGE 3
     public void resetStage(){
 
+        gp.ui.scrollYPosition = 0;
         gp.player.hasCore1 = 0;
         gp.player.hasCore2 = 0;
         gp.player.hasCore3 = 0;
