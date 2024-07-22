@@ -268,6 +268,12 @@ public class Player extends Entity {
         }
     }
 
+    //reset weapon
+    public void resetWeapon(){
+        hasGun = false;
+        gp.aSetter.setObject();
+    }
+
     public void interactMON(int i) {
         if (i != 999) {
             gp.playSE(7);

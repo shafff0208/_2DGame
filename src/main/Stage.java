@@ -83,7 +83,10 @@ public class Stage {
         gp.scientist.resetBuff();
         gp.player.setupPlayer();
         gp.tileM.setupMap();
-
+//        gp.aSetter.setCore();
+//        gp.aSetter.setBASE();
+        gp.player.resetWeapon();
+        gp.player.setCurrentWeapon(0);
     }
 
     public void checkStageTimer() {
