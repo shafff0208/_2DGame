@@ -1,4 +1,6 @@
 package main;
+import entity.Player;
+
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -17,6 +19,7 @@ public class KeyHandler implements KeyListener {
     @Override
     public void keyTyped(KeyEvent e) {
     }
+
 
     @Override
     public void keyPressed(KeyEvent e) {
@@ -91,6 +94,15 @@ public class KeyHandler implements KeyListener {
             if (code == KeyEvent.VK_E) {
                 gp.gameState = gp.pauseState;
             }
+            if (code == KeyEvent.VK_0) {
+                gp.player.weaponButtonPress(0);
+            }
+            if (code == KeyEvent.VK_1) {
+                gp.player.weaponButtonPress(1);
+            }
+            //if (code == KeyEvent.VK_2) {
+            //    gp.player.weaponButtonPress(2);
+            //}
         }
 
         //Pause State
