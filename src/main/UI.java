@@ -282,11 +282,11 @@ public class UI {
     }
 
     public void updateScrollingText() {
-        scrollYPosition += scrollSpeed;
+        scrollYPosition -= scrollSpeed;
 
         // Reset scroll position when the text has scrolled off the screen
         if (scrollYPosition > getHeightOfScrollingText()) {
-            scrollYPosition = -gp.tileSize - padding; // Start scrolling from just above the screen
+            scrollYPosition = -gp.tileSize - padding; // Start scrolling from just below the screen
         }
     }
 
@@ -298,34 +298,43 @@ public class UI {
 
         String text = "GAME OVER";
         g2.setFont(g2.getFont().deriveFont(Font.PLAIN,80F));
-        int x = getXCenteredText(text);
+        int textWidth = g2.getFontMetrics().stringWidth(text);
+        int screenWidth = gp.screenWidth;
         int y = gp.screenHeight/2;
-        g2.drawString(text, x, y);
+
+        int xScroll = (screenWidth - textWidth) / 2; // Center horizontally
+        int initialY = y + gp.tileSize;
+        int yScroll = (int) scrollYPosition + initialY;
+        g2.drawString(text, xScroll, yScroll);
 
         g2.setFont(g2.getFont().deriveFont(Font.PLAIN,45F));
         text = "Thanks For Playing";
-        x = getXCenteredText(text);
         y += gp.tileSize;
-        g2.drawString(text, x, y );
+        initialY = y + gp.tileSize;
+        xScroll = (screenWidth - textWidth) / 2; // Center horizontally
+        yScroll = (int) scrollYPosition + initialY;
+        g2.drawString(text, xScroll, yScroll );
 
         g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 15F));
         text = endingStoryline01;
-        int textWidth = g2.getFontMetrics().stringWidth(text);
-        int screenWidth = gp.screenWidth;
-        int xScroll = (screenWidth - textWidth) / 2; // Center horizontally
-        int initialY = y + gp.tileSize;
+        y += gp.tileSize;
+        textWidth = g2.getFontMetrics().stringWidth(text);
+        screenWidth = gp.screenWidth;
+        xScroll = (screenWidth - textWidth) / 2;
+        initialY = y + gp.tileSize;
+        yScroll = (int) scrollYPosition + initialY; // Vertical position relative to "Thanks For Playing"
         updateScrollingText();
-        int yScroll = (int) scrollYPosition + initialY; // Vertical position relative to "Thanks For Playing"
         g2.drawString(text, xScroll, yScroll);
 
-        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 45F));
-        text = "Back to Title Screen";
-        x = getXCenteredText(text);
-        y = gp.tileSize*10;
-        g2.drawString(text, x, y );
-        if (endNum == 0){
-            g2.drawString(">", x-gp.tileSize, y);
-        }
+
+//        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 45F));
+//        text = "Back to Title Screen";
+//        x = getXCenteredText(text);
+//        y = gp.tileSize*10;
+//        g2.drawString(text, x, y );
+//        if (endNum == 0){
+//            g2.drawString(">", x-gp.tileSize, y);
+//        }
     }
 
     public int getXCenteredText(String text){
