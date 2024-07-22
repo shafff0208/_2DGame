@@ -181,7 +181,7 @@ public class Player extends Entity {
 
             shotAvailableCounter = 0;
 
-            gp.playSE(10);
+            gp.playSE(8);
         }
 
         if (shotAvailableCounter < 30) {
@@ -289,14 +289,14 @@ public class Player extends Entity {
     public void damageMonster(int i, int attack) {
         if (i != 999) {
             if (gp.monster[i].invincible == false) {
+
                 //damage deal
-                gp.monster[i].life -= 2;
-                //Sound
-//              gp.playSE(5);
+                gp.monster[i].life -= 1;
 
                 //mon die
                 if (gp.monster[i].life <= 0) {
                     gp.monster[i] = null;
+                    gp.playSE(9);
                 }
             }
 
