@@ -27,7 +27,13 @@ public class UI {
     public int stageNum = 0;
     public int endNum = 0;
     public int scientistNum = 0;
+    private float scrollYPosition = 0; // Start just below the screen
+    private final float scrollSpeed = 1; // Adjust this value to control the scrolling speed
+    private int padding = 50;
 
+    String endingStoryline01 = "You died. Unfortunately, you could not save the world despite your hard work and effort in fighting the mutated monsters. From all you know, no one survived and you as the last man standing have fallen down, extinguishing humanity’s last ray of hope. It is still unbelievable to you that the once living animals and plants, rats, insects, bears, trees and even dogs have now mutated and become monsters. These mutated monsters are heartless…..murderous…..and attack any moving things that are not a monster. These monsters have taken over the world and rule the world like humans once did. ‘Maybe…...just maybe……’, you think, that there is still someone out there, hiding, surviving on the other side of the world, trying to save humanity from these murderous and cruel monsters. Deep down inside, a part of you regretted not working harder and smarter to fight these monsters, and to group up with any other survivors out there to save humanity. Now you are just hoping for another chance to fight these monsters again but too bad, you’re dead.";
+    String endingStoryline02 = "The world has been restored and everything went back to normal. Thanks to you who successfully purified the radiation core and all the mutated monsters have turned back into the animals they once were. Although you managed to save the world, you died from radiation while purifying the radiation core. You may feel sad…..that you died but it was a heroic death I would say. People remember you and even put up a statue which resembled your heroic act. You were basically a legend for the next few generations and a role model to kids. Well, it’s not so bad now, ain’t it? Oh right…..you killed someone you met along the game - “scientist”. Even though he invited you to team up and offered you some buffs which could be useful to you in killing the mutated monsters, you rejected and killed him along the way. “Scientist” is a doctor called Dr. Thanos and he was actually the mastermind behind the mutated monsters. In hopes of ruling the world by himself, he created a type of radiation which will mutate animals and trees into monsters to kill all human beings. These mutated monsters only listen to his commands and will kill anything that moves in their sights. But you, my friend……you have the wisdom and knowledge to prevent you from being deceived by Dr. Thanos. What a pity…..that the world lost a wise man. Great job friend and till I see you again.";;
+    String endingStoryline03 = "What a pity…..one more step, just placing the purifier in the radiation core and the world will restore back to normal. But you let your guard down and got killed by “scientist”. You had plenty of chances to kill him but you didn’t. It’s too random you said? Well, don’t you think it’s weird? That someone anonymous appeared out of nowhere and offered you buffs to fight the monsters making you strong. Not everyone in the world is a kind person and sometimes you should put yourself ahead of others. This “Scientist” is a doctor called Dr. Thanos and he was actually the mastermind behind the mutated monsters. In hopes of ruling the world by himself, he created a type of radiation which will mutate animals and trees into monsters to kill all human beings. These mutated monsters only listen to his commands and will kill anything that moves in their sights. You could have gotten all the buffs and killed him right before you left the last level but such a kind-hearted person you are to think he’s not one who’s wicked. The world has now fallen into chaos with all the mutated monsters roaming around every corner, killing each and every human they find.";
 
     public UI(GamePanel gp) {
         this.gp = gp;
@@ -60,8 +66,9 @@ public class UI {
             if (messageOn == true){
                 g2.setFont(g2.getFont().deriveFont(20F));
                 g2.drawString(message, gp.tileSize/2, gp.tileSize*5 );
+
                 messageCounter++;
-                if (messageCounter > 60){
+                if (messageCounter > 60) {
                     messageCounter = 0;
                     messageOn = false;
                 }
@@ -186,7 +193,8 @@ public class UI {
     }
 
 
-    public void drawPauseScreen(){
+    public void drawPauseScreen() {
+
         String text = "PAUSED";
         g2.setFont(g2.getFont().deriveFont(Font.PLAIN,80F));
         int x = getXCenteredText(text);
@@ -273,7 +281,21 @@ public class UI {
         }
     }
 
-    public void drawGameOverScreen(){
+    public void updateScrollingText() {
+        scrollYPosition += scrollSpeed;
+
+        // Reset scroll position when the text has scrolled off the screen
+        if (scrollYPosition > getHeightOfScrollingText()) {
+            scrollYPosition = -gp.tileSize - padding; // Start scrolling from just above the screen
+        }
+    }
+
+    public int getHeightOfScrollingText() {
+        return (int) (g2.getFontMetrics().getHeight() * 2 + padding * 2);
+    }
+
+    public void drawGameOverScreen() {
+
         String text = "GAME OVER";
         g2.setFont(g2.getFont().deriveFont(Font.PLAIN,80F));
         int x = getXCenteredText(text);
@@ -286,6 +308,17 @@ public class UI {
         y += gp.tileSize;
         g2.drawString(text, x, y );
 
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 15F));
+        text = endingStoryline01;
+        int textWidth = g2.getFontMetrics().stringWidth(text);
+        int screenWidth = gp.screenWidth;
+        int xScroll = (screenWidth - textWidth) / 2; // Center horizontally
+        int initialY = y + gp.tileSize;
+        updateScrollingText();
+        int yScroll = (int) scrollYPosition + initialY; // Vertical position relative to "Thanks For Playing"
+        g2.drawString(text, xScroll, yScroll);
+
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 45F));
         text = "Back to Title Screen";
         x = getXCenteredText(text);
         y = gp.tileSize*10;
