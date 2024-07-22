@@ -35,7 +35,7 @@ public class Stage {
         if(gp.gameState == gp.playState){
 
             //Change stageSeconds to stageMinutes for stage progression
-            if (currentStage == firstStage && stageSeconds == 0){
+            if (currentStage == firstStage && stageSeconds == 0 && stageMinutes < 1){
                 gp.gameState = gp.dialogueState;
                 gp.scientist.speak();
                 gp.aSetter.setBASE();
@@ -46,13 +46,28 @@ public class Stage {
 
             }
             else if (currentStage == firstStage && stageMinutes >= 1) {
-                setupStageProgress();
+
+                if(gp.player.hasCore1 == 0){
+                    resetStage();
+                }else{
+                    setupStageProgress();
+                }
 
             } else if (currentStage == secondStage && stageMinutes >= 1) {
-                setupStageProgress();
+
+                if(gp.player.hasCore2 == 0){
+                    resetStage();
+
+                }else{
+                    setupStageProgress();
+                }
 
             } else if (currentStage == thirdStage && stageMinutes >= 1 || gp.player.life == 0) {
-                resetStage();
+                if(gp.player.hasCore3 == 0){
+                    resetStage();
+                }else{
+                    resetStage();
+                }
             }
 //        //DEBUG
 //         System.out.println("Stage: " + currentStage);
@@ -76,6 +91,7 @@ public class Stage {
     //RESET STAGE if player dies or player reach STAGE 3
     public void resetStage(){
 
+        gp.ui.scrollYPosition = 0;
         gp.player.hasCore1 = 0;
         gp.player.hasCore2 = 0;
         gp.player.hasCore3 = 0;
