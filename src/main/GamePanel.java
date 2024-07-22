@@ -45,6 +45,7 @@ public class GamePanel extends JPanel implements Runnable {
     public SuperObject[] obj = new SuperObject[50];
     public ArrayList<Entity> projectileList = new ArrayList<>();
     public ArrayList<Entity> entityList= new ArrayList<>();
+    public boolean monsterInitialized = false;
 
     // Game State
     public int gameState;
@@ -55,7 +56,7 @@ public class GamePanel extends JPanel implements Runnable {
     public final int endState = 4;
     public final int dialogueState = 5;
 
-    public boolean monsterInitialized = false;
+
 
     public GamePanel() {
 
@@ -107,6 +108,7 @@ public class GamePanel extends JPanel implements Runnable {
             double d = currentTime - lastTime;
             delta += (d) / drawInterval;
             lastTime = currentTime;
+
             //Temporary invisibility during collision
             if (!player.newCollision) {
                 collideCD += (d / 1e9);

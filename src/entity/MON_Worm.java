@@ -17,7 +17,7 @@ public class MON_Worm extends Entity {
         name= "Worm";
         direction = "right";
         speed= 2;
-        maxLife = 2;
+        maxLife = 1;
         life = maxLife;
 
         getImage();

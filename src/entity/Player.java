@@ -5,7 +5,6 @@ import main.KeyHandler;
 import object.OBJ_Projectile_Blue;
 
 import java.awt.*;
-import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 
 
@@ -17,10 +16,9 @@ public class Player extends Entity {
     public final int screenY;
     private boolean hasGun = false;
     private int currentWeapon = 0;
-    int hasSword = 0;
-    int hasCore1 = 0;
-    int hasCore2 = 0;
-    int hasCore3 = 0;
+    public int hasCore1 = 0;
+    public int hasCore2 = 0;
+    public int hasCore3 = 0;
 
     public boolean newCollision = true;
 
@@ -58,14 +56,14 @@ public class Player extends Entity {
     public void getPlayerImage() {
         if (currentWeapon == 1) {
             //Sprites player with blue gun
-            up1 = setup("/player/PlayerBlueGun_Up");
-            up2 = setup("/player/PlayerBlueGun_Up");
-            down1 = setup("/player/PlayerBlueGun_Down");
-            down2 = setup("/player/PlayerBlueGun_Down");
-            left1 = setup("/player/PlayerBlueGun_Left");
-            left2 = setup("/player/PlayerBlueGun_Left");
-            right1 = setup("/player/PlayerBlueGun_Right");
-            right2 = setup("/player/PlayerBlueGun_Right");
+            up1 = setup("/player/PlayerAttack_Up (1)");
+            up2 = setup("/player/PlayerAttack_Up (2)");
+            down1 = setup("/player/PlayerAttack_Down (1)");
+            down2 = setup("/player/PlayerAttack_Down (2)");
+            left1 = setup("/player/PlayerAttack_Left (1)");
+            left2 = setup("/player/PlayerAttack_Left (2)");
+            right1 = setup("/player/PlayerAttack_Right (1)");
+            right2 = setup("/player/PlayerAttack_Right (2)");
         } else {
             //Default player sprites
             up1 = setup("/player/Player_Up1");
@@ -207,7 +205,6 @@ public class Player extends Entity {
 
                 case "XCALIBA":
                     gp.playSE(4);
-                    hasSword++;
                     gp.obj[i] = null;
                     gp.ui.showMessage("+1 XCALIBA");
                     break;
@@ -224,7 +221,6 @@ public class Player extends Entity {
                     hasCore1++;
                     gp.obj[i] = null;
                     gp.ui.showMessage("Core (Base) Found! Proceed to Base");
-                    System.out.println(hasCore1);
                     break;
 
                 case "Core 2":
@@ -257,10 +253,12 @@ public class Player extends Entity {
                     }else if(gp.stage.currentStage == gp.stage.thirdStage){
                         if(hasCore3 == 1){
                             gp.gameState = gp.endState;
-                        }else if(hasCore2 == 0){
+                        }else if(hasCore3 == 0){
                             gp.ui.showMessage("Find Core!");
                         }
                     }
+                    //DEBUG
+                    System.out.println("Core 1: " + hasCore1 + " Core 2: " + hasCore2 + " Core 3: " + hasCore3);
 
                     break;
 
@@ -277,59 +275,16 @@ public class Player extends Entity {
     public void interactMON(int i) {
         if (i != 999) {
             gp.playSE(7);
-            System.out.println("Collision!");
             // if player enter new collision, reduce HP
             if (newCollision) {
                 life--;
                 newCollision = false;
             }
+//            //DEBUG
+//            System.out.println("Collision!");
+
         }
     }
-
-//    public void attacking() {
-//
-//        spriteNum++;
-//
-//        if (spriteCounter <= 5) {
-//            spriteNum = 1;
-//        }
-//        if (spriteCounter > 5 && spriteCounter <= 25) {
-//
-//            int currentWorldX = worldX;
-//            int currentWorldY = worldY;
-//            int solidAreaWidth = solidArea.width;
-//            int solidAreaHeight = solidArea.height;
-//
-//            switch (direction) {
-//                case "up":
-//                    worldY -= attackArea.height;
-//                    break;
-//                case "down":
-//                    worldY += attackArea.height;
-//                    break;
-//                case "left":
-//                    worldX -= attackArea.width;
-//                    break;
-//                case "right":
-//                    worldX -= attackArea.width;
-//                    break;
-//            }
-//
-//            solidArea.width = attackArea.width;
-//            solidArea.height = attackArea.height;
-//
-//            int monIndex = gp.cDetection.checkEntity(this, gp.monster);
-//            damageMonster(monIndex, attack);
-//
-//            worldX = currentWorldX;
-//            worldY = currentWorldY;
-//        }
-//        if (spriteCounter > 25) {
-//            spriteNum = 1;
-//            spriteCounter = 0;
-//            attacking = false;
-//        }
-//    }
 
     public void damageMonster(int i, int attack) {
         if (i != 999) {
@@ -388,14 +343,6 @@ public class Player extends Entity {
                 break;
         }
         g2.drawImage(image, screenX, screenY, null);
-    }
-
-    public Rectangle getBounds() {
-        return new Rectangle(gp.player.worldX, gp.player.worldY, gp.tileSize, gp.tileSize);
-    }
-
-    public boolean isHasGun(){
-        return hasGun;
     }
 
     public void setCurrentWeapon(int weapon){

@@ -73,7 +73,6 @@ public class Scientist extends Entity {
         }
 
     }
-
     public void resetBuff(){
         gp.player.speed = 4;
         gp.player.life = 5;

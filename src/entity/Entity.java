@@ -14,13 +14,11 @@ public class Entity {
     public int worldX, worldY;
     public int speed;
     public BufferedImage up1, up2, down1, down2, left1 ,left2, right1, right2;
-    public BufferedImage attackXCalibaUp, attackXCalibaDown, attackXCalibaLeft, attackXCalibaRight;
     public String direction;
     public String name;
     public int spriteCounter = 0;
     public int spriteNum = 1;
     public Rectangle solidArea = new Rectangle(0,0,48,48);
-    public Rectangle attackArea = new Rectangle(0,0,0,0);
     public int solidAreaDefaultX, solidAreaDefaultY;
     public Boolean collisionOn = false;
     public int maxLife;
@@ -28,14 +26,10 @@ public class Entity {
     public int attack;
     public int actionLockCounter = 0;
     public boolean invincible = false;
-    boolean attacking = false;
-    public int invincibleCounter = 0;
     public int type;
     public Projectiles projectile;
     public int shotAvailableCounter = 0;
     public boolean alive = true;
-    public boolean dying = false;
-    public boolean damageReaction;
 
     public Entity(GamePanel gp) {
 
@@ -52,15 +46,6 @@ public class Entity {
         collisionOn = false;
         gp.cDetection.checkTile(this);
         gp.cDetection.checkObject(this, false);
-//        boolean contactPlayer = gp.cDetection.checkPlayer(this);
-//
-//        if (this.type == 1 && contactPlayer ==true){
-//            if (gp.player.invincible ==false){
-//                //player receives damage
-//                gp.player.life -=1;
-//                gp.player.invincible = true;
-//            }
-//        }
 
         if(collisionOn == false){
             switch (direction){
@@ -85,14 +70,6 @@ public class Entity {
             }
             spriteCounter = 0;
         }
-
-//        if(invincible == true){
-//            invincibleCounter++;
-//            if(invincibleCounter > 40){
-//                invincible = false;
-//                invincibleCounter = 0;
-//            }
-//        }
     }
 
 

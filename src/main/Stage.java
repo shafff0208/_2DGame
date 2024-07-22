@@ -54,8 +54,8 @@ public class Stage {
             } else if (currentStage == thirdStage && stageMinutes >= 1 || gp.player.life == 0) {
                 resetStage();
             }
-        //DEBUG
-         System.out.println("Stage: " + currentStage);
+//        //DEBUG
+//         System.out.println("Stage: " + currentStage);
 
         }
     }
@@ -76,6 +76,9 @@ public class Stage {
     //RESET STAGE if player dies or player reach STAGE 3
     public void resetStage(){
 
+        gp.player.hasCore1 = 0;
+        gp.player.hasCore2 = 0;
+        gp.player.hasCore3 = 0;
         gp.gameState = gp.endState;
         currentStage = firstStage;
         gp.scientist.desperateCounter = 0;
@@ -83,8 +86,6 @@ public class Stage {
         gp.scientist.resetBuff();
         gp.player.setupPlayer();
         gp.tileM.setupMap();
-//        gp.aSetter.setCore();
-//        gp.aSetter.setBASE();
         gp.player.resetWeapon();
         gp.player.setCurrentWeapon(0);
     }

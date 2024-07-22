@@ -16,7 +16,7 @@ public class MON_Rat extends Entity {
         type = 1;
         name= "Rat";
         direction = "right";
-        speed= 2;
+        speed= 4;
         maxLife = 2;
         life = maxLife;
 
