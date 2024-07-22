@@ -20,9 +20,12 @@ public class Stage {
 
     public Stage(GamePanel gp){
         this.gp = gp;
+        stageTimer = new Timer(1000, e -> updateStageTime());
     }
 
     public void checkStage() {
+
+
 
         long currentTime = System.currentTimeMillis();
         long elapsedTime = (currentTime - stageStartTime) / 1000;
@@ -35,36 +38,39 @@ public class Stage {
             if (currentStage == firstStage && stageSeconds == 0){
                 gp.gameState = gp.dialogueState;
                 gp.scientist.speak();
+                //gp.aSetter.setBASE();
+                //gp.aSetter.setCore();
                 gp.player.setupPlayer();
                 gp.tileM.setupMap();
                 gp.ui.stageOn = true;
 
             }
-            else if (currentStage == firstStage && stageSeconds >= 2000) {
-                gp.gameState = gp.continueState;
-                gp.scientist.speak();
-                currentStage++;
-                gp.player.setupPlayer();
-                gp.tileM.setupMap();
-                gp.ui.stageOn = true;
-                stageStartTime = System.currentTimeMillis();
+            else if (currentStage == firstStage && stageMinutes >= 1) {
+                setupStageProgress();
 
-            } else if (currentStage == secondStage && stageSeconds >= 2000) {
-                gp.gameState = gp.continueState;
-                gp.scientist.speak();
-                currentStage++;
-                gp.player.setupPlayer();
-                gp.tileM.setupMap();
-                gp.ui.stageOn = true;
-                stageStartTime = System.currentTimeMillis();
+            } else if (currentStage == secondStage && stageMinutes >= 1) {
+                setupStageProgress();
 
             } else if (currentStage == thirdStage && stageSeconds >= 20 || gp.player.life == 0) {
                 resetStage();
             }
-//        //DEBUG
-//         System.out.println("Stage: " + currentStage);
+        //DEBUG
+         System.out.println("Stage: " + currentStage);
 
         }
+    }
+
+    public void setupStageProgress(){
+
+        gp.gameState = gp.continueState;
+        gp.scientist.speak();
+        currentStage++;
+        //gp.aSetter.setBASE();
+        //gp.aSetter.setCore();
+        gp.player.setupPlayer();
+        gp.tileM.setupMap();
+        gp.ui.stageOn = true;
+        stageStartTime = System.currentTimeMillis();
     }
 
     //RESET STAGE if player dies or player reach STAGE 3

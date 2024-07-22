@@ -5,6 +5,7 @@ import main.KeyHandler;
 import object.OBJ_Projectile_Blue;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 
 
@@ -166,7 +167,8 @@ public class Player extends Entity{
                 spriteCounter = 0;
             }
         }
-        if(gp.keyH.shootKeyPressed == true && projectile.alive == false && shotAvailableCounter == 30){
+        if( currentWeapon == 1 && gp.keyH.shootKeyPressed == true && projectile.alive == false && shotAvailableCounter == 30 && hasGun == true ){
+
 
             projectile.set(worldX, worldY, direction, true);
 

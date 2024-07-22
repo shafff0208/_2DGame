@@ -100,6 +100,9 @@ public class KeyHandler implements KeyListener {
             if (code == KeyEvent.VK_1) {
                 gp.player.weaponButtonPress(1);
             }
+            //if (code == KeyEvent.VK_2) {
+            //    gp.player.weaponButtonPress(2);
+            //}
         }
 
         //Pause State
