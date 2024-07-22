@@ -64,18 +64,13 @@ public class GamePanel extends JPanel implements Runnable {
         this.setDoubleBuffered(true);
         this.addKeyListener(keyH);
         this.setFocusable(true);
-
-        stage.stageTimer = new Timer(1000, e -> stage.updateStageTime());
-
-        entityList = new ArrayList<>();
     }
 
     public void setupGame() {
-        playMusic(0);
+//        playMusic(0);
         gameState = titleState;
         stage.currentStage = stage.firstStage;
         aSetter.setObject();
-        aSetter.setMON();
     }
 
     public void playMusic(int i) {

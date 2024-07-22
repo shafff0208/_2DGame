@@ -94,10 +94,11 @@ public class TileManager {
 
             }
             System.out.println("nTiles: " + availableTiles.size());
+            gp.aSetter.setMON();
             
             br.close();
 
-            gp.aSetter.setMON();
+
 
         }catch(Exception e){
 

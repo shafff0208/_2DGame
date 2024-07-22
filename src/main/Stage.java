@@ -51,7 +51,7 @@ public class Stage {
             } else if (currentStage == secondStage && stageMinutes >= 1) {
                 setupStageProgress();
 
-            } else if (currentStage == thirdStage && stageSeconds >= 20 || gp.player.life == 0) {
+            } else if (currentStage == thirdStage && stageMinutes >= 1 || gp.player.life == 0) {
                 resetStage();
             }
         //DEBUG
