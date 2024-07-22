@@ -16,9 +16,9 @@ public class Projectiles extends Entity {
     }
     public void update(){
 
-        int monsterIndex = gp.cDetection.checkEntity(this, gp.monster);
-        if(monsterIndex != 999){
-            gp.player.damageMonster(monsterIndex, attack);
+        int monIndex = gp.cDetection.checkEntity(this, gp.monster);
+        if(monIndex != 999){
+            gp.player.damageMonster(monIndex, attack);
             alive = false;
         }
 

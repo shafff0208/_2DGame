@@ -9,7 +9,7 @@ import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 
 
-public class Player extends Entity{
+public class Player extends Entity {
 
     GamePanel gp;
     KeyHandler keyH;
@@ -21,14 +21,14 @@ public class Player extends Entity{
 
     public boolean newCollision = true;
 
-    public Player (GamePanel gp, KeyHandler keyH){
+    public Player(GamePanel gp, KeyHandler keyH) {
 
         super(gp);
         this.gp = gp;
         this.keyH = keyH;
 
-        screenX = gp.screenWidth/2 - (gp.tileSize/2);
-        screenY = gp.screenHeight/2 - (gp.tileSize/2);
+        screenX = gp.screenWidth / 2 - (gp.tileSize / 2);
+        screenY = gp.screenHeight / 2 - (gp.tileSize / 2);
 
         setDefaultValues();
         getPlayerImage();
@@ -42,7 +42,7 @@ public class Player extends Entity{
         solidArea.width = 32;
     }
 
-    public void setDefaultValues(){
+    public void setDefaultValues() {
 
         //Player Status
         speed = 4;
@@ -52,7 +52,7 @@ public class Player extends Entity{
         projectile = new OBJ_Projectile_Blue(gp);
     }
 
-    public void getPlayerImage(){
+    public void getPlayerImage() {
         if (currentWeapon == 1) {
             //Sprites player with blue gun
             up1 = setup("/player/PlayerBlueGun_Up");
@@ -63,7 +63,7 @@ public class Player extends Entity{
             left2 = setup("/player/PlayerBlueGun_Left");
             right1 = setup("/player/PlayerBlueGun_Right");
             right2 = setup("/player/PlayerBlueGun_Right");
-        }else{
+        } else {
             //Default player sprites
             up1 = setup("/player/Player_Up1");
             up2 = setup("/player/Player_Up2");
@@ -77,21 +77,20 @@ public class Player extends Entity{
     }
 
 
+    public void setupPlayer() {
+        if (gp.stage.currentStage == gp.stage.firstStage) {
 
-    public void setupPlayer(){
-        if(gp.stage.currentStage == gp.stage.firstStage){
+            worldX = gp.tileSize * 8;
+            worldY = gp.tileSize * 16;
 
-            worldX= gp.tileSize * 8;
-            worldY= gp.tileSize * 16;
+        } else if (gp.stage.currentStage == gp.stage.secondStage) {
 
-        }else if (gp.stage.currentStage == gp.stage.secondStage){
+            worldX = gp.tileSize * 40;
+            worldY = gp.tileSize * 12;
 
-            worldX= gp.tileSize * 40;
-            worldY= gp.tileSize * 12;
-
-        }else if (gp.stage.currentStage == gp.stage.thirdStage){
-            worldX= gp.tileSize * 26;
-            worldY= gp.tileSize * 27;
+        } else if (gp.stage.currentStage == gp.stage.thirdStage) {
+            worldX = gp.tileSize * 26;
+            worldY = gp.tileSize * 27;
         }
 
         //RESET PLAYER LIFE EVERY NEW STAGE
@@ -101,19 +100,20 @@ public class Player extends Entity{
 //        System.out.println(STR."X: \{worldX} Y: \{worldY}");
 
     }
-    public void weaponButtonPress(int button){
-        if (button == 1 && hasGun){
+
+    public void weaponButtonPress(int button) {
+        if (button == 1 && hasGun) {
             currentWeapon = 1; // Equip blue gun
-        }else{
+        } else {
             currentWeapon = 0; // Unequip weapon
         }
         getPlayerImage();
     }
 
-    public void update(){
+    public void update() {
 
         if (keyH.upPressed == true || keyH.downPressed == true ||
-                keyH.leftPressed == true || keyH.rightPressed == true){
+                keyH.leftPressed == true || keyH.rightPressed == true) {
 
             if (keyH.upPressed == true) {
                 direction = "up";
@@ -143,51 +143,55 @@ public class Player extends Entity{
             interactMON(monIndex);
 
 
-            if(collisionOn == false){
-                switch (direction){
-                    case "up": worldY -= speed;
+            if (collisionOn == false) {
+                switch (direction) {
+                    case "up":
+                        worldY -= speed;
                         break;
-                    case "down": worldY += speed;
+                    case "down":
+                        worldY += speed;
                         break;
-                    case "left": worldX -= speed;
+                    case "left":
+                        worldX -= speed;
                         break;
-                    case "right": worldX += speed;
+                    case "right":
+                        worldX += speed;
                         break;
 
                 }
             }
 
             spriteCounter++;
-            if (spriteCounter > 12){
-                if (spriteNum == 1){
+            if (spriteCounter > 12) {
+                if (spriteNum == 1) {
                     spriteNum = 2;
-                }else if (spriteNum == 2){
-                    spriteNum =1;
+                } else if (spriteNum == 2) {
+                    spriteNum = 1;
                 }
                 spriteCounter = 0;
             }
         }
-        if( currentWeapon == 1 && gp.keyH.shootKeyPressed == true && projectile.alive == false && shotAvailableCounter == 30 && hasGun == true ){
+        if (currentWeapon == 1 && gp.keyH.shootKeyPressed == true && projectile.alive == false && shotAvailableCounter == 30 && hasGun == true) {
 
 
             projectile.set(worldX, worldY, direction, true);
 
             gp.projectileList.add(projectile);
 
-            shotAvailableCounter= 0;
+            shotAvailableCounter = 0;
 
             gp.playSE(10);
         }
 
-        if(shotAvailableCounter < 30){
+        if (shotAvailableCounter < 30) {
             shotAvailableCounter++;
         }
     }
 
-    public void pickUpObj(int i){
-        if(i != 999){
+    public void pickUpObj(int i) {
+        if (i != 999) {
             String objectName = gp.obj[i].name;
-            switch (objectName){
+            switch (objectName) {
                 case "Normal Gun":
                     gp.playSE(4);
                     hasGun = true;
@@ -198,7 +202,7 @@ public class Player extends Entity{
 
                     break;
 
-                case "XCALIBA" :
+                case "XCALIBA":
                     gp.playSE(4);
                     hasSword++;
                     gp.obj[i] = null;
@@ -217,8 +221,8 @@ public class Player extends Entity{
         }
     }
 
-    public void interactMON(int i){
-        if(i != 999){
+    public void interactMON(int i) {
+        if (i != 999) {
             gp.playSE(7);
             System.out.println("Collision!");
             // if player enter new collision, reduce HP
@@ -229,13 +233,70 @@ public class Player extends Entity{
         }
     }
 
-    public void damageMonster(int i, int attack){
-        if(i != 999){
-            System.out.println("Hit!");
-        }else{
-            System.out.println("Miss!");
+//    public void attacking() {
+//
+//        spriteNum++;
+//
+//        if (spriteCounter <= 5) {
+//            spriteNum = 1;
+//        }
+//        if (spriteCounter > 5 && spriteCounter <= 25) {
+//
+//            int currentWorldX = worldX;
+//            int currentWorldY = worldY;
+//            int solidAreaWidth = solidArea.width;
+//            int solidAreaHeight = solidArea.height;
+//
+//            switch (direction) {
+//                case "up":
+//                    worldY -= attackArea.height;
+//                    break;
+//                case "down":
+//                    worldY += attackArea.height;
+//                    break;
+//                case "left":
+//                    worldX -= attackArea.width;
+//                    break;
+//                case "right":
+//                    worldX -= attackArea.width;
+//                    break;
+//            }
+//
+//            solidArea.width = attackArea.width;
+//            solidArea.height = attackArea.height;
+//
+//            int monIndex = gp.cDetection.checkEntity(this, gp.monster);
+//            damageMonster(monIndex, attack);
+//
+//            worldX = currentWorldX;
+//            worldY = currentWorldY;
+//        }
+//        if (spriteCounter > 25) {
+//            spriteNum = 1;
+//            spriteCounter = 0;
+//            attacking = false;
+//        }
+//    }
+
+    public void damageMonster(int i, int attack) {
+        if (i != 999) {
+            if (gp.monster[i].invincible == false) {
+                //damage deal
+                gp.monster[i].life -= 2;
+                //Sound
+//              gp.playSE(5);
+
+                //mon die
+                if (gp.monster[i].life <= 0) {
+                    gp.monster[i] = null;
+                }
+            }
+
         }
     }
+
+
+
 
     public void draw(Graphics2D g2){
 
