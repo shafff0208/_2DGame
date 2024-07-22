@@ -38,8 +38,8 @@ public class Stage {
             if (currentStage == firstStage && stageSeconds == 0){
                 gp.gameState = gp.dialogueState;
                 gp.scientist.speak();
-                //gp.aSetter.setBASE();
-                //gp.aSetter.setCore();
+                gp.aSetter.setBASE();
+                gp.aSetter.setCore();
                 gp.player.setupPlayer();
                 gp.tileM.setupMap();
                 gp.ui.stageOn = true;
@@ -65,8 +65,8 @@ public class Stage {
         gp.gameState = gp.continueState;
         gp.scientist.speak();
         currentStage++;
-        //gp.aSetter.setBASE();
-        //gp.aSetter.setCore();
+        gp.aSetter.setBASE();
+        gp.aSetter.setCore();
         gp.player.setupPlayer();
         gp.tileM.setupMap();
         gp.ui.stageOn = true;

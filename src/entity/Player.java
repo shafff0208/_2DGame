@@ -18,6 +18,9 @@ public class Player extends Entity {
     private boolean hasGun = false;
     private int currentWeapon = 0;
     int hasSword = 0;
+    int hasCore1 = 0;
+    int hasCore2 = 0;
+    int hasCore3 = 0;
 
     public boolean newCollision = true;
 
@@ -214,6 +217,50 @@ public class Player extends Entity {
                     life++;
                     gp.obj[i] = null;
                     gp.ui.showMessage("+1 life");
+                    break;
+
+                case "Core 1":
+                    gp.playSE(3);
+                    hasCore1++;
+                    gp.obj[i] = null;
+                    gp.ui.showMessage("Core (Base) Found! Proceed to Base");
+                    System.out.println(hasCore1);
+                    break;
+
+                case "Core 2":
+                    gp.playSE(3);
+                    hasCore2++;
+                    gp.obj[i] = null;
+                    gp.ui.showMessage("Core (Heart) Found! Proceed to Base");
+                    break;
+
+                case "Core 3":
+                    gp.playSE(3);
+                    hasCore3++;
+                    gp.obj[i] = null;
+                    gp.ui.showMessage("Core (Activator) Found! Proceed to Base");
+                    break;
+
+                case "BASE Inner", "BASE Outer":
+                    if(gp.stage.currentStage == gp.stage.firstStage){
+                        if(hasCore1 == 1){
+                            gp.stage.setupStageProgress();
+                        }else if(hasCore1 == 0){
+                            gp.ui.showMessage("Find Core!");
+                        }
+                    }else if(gp.stage.currentStage == gp.stage.secondStage){
+                        if(hasCore2 == 1){
+                            gp.stage.setupStageProgress();
+                        }else if(hasCore2 == 0){
+                            gp.ui.showMessage("Find Core!");
+                        }
+                    }else if(gp.stage.currentStage == gp.stage.thirdStage){
+                        if(hasCore3 == 1){
+                            gp.gameState = gp.endState;
+                        }else if(hasCore2 == 0){
+                            gp.ui.showMessage("Find Core!");
+                        }
+                    }
 
                     break;
 
@@ -299,7 +346,6 @@ public class Player extends Entity {
 
 
     public void draw(Graphics2D g2){
-
         BufferedImage image = null;
         switch (direction){
             case "up":
@@ -336,7 +382,6 @@ public class Player extends Entity {
                 break;
         }
         g2.drawImage(image, screenX, screenY, null);
-
     }
 
     public Rectangle getBounds() {
