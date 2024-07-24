@@ -9,5 +9,4 @@ Bring the core to the base without dying within 1 minute
 - Use WASD to move around
 - Collect the gun and use SPACE to shoot at enemies
 
-
-[USE INTELLIJ TO RUN THE CODE IF ANY OTHER IDE IS NOT WORKING]
+[ADD 'res' FILE INTO JAVA SOURCE FOLDER]
